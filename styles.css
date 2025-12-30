@@ -37,6 +37,18 @@ body {
     font-weight: 300;
 }
 
+.blurb {
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.blurb p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
 .projects {
     margin-top: 3rem;
 }
