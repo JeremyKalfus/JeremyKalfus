@@ -59,7 +59,7 @@ body.dark-mode {
 
 .theme-toggle {
     position: relative;
-    display: inline-block;
+    display: block;
     width: 50px;
     height: 26px;
 }
@@ -68,6 +68,7 @@ body.dark-mode {
     opacity: 0;
     width: 0;
     height: 0;
+    position: absolute;
 }
 
 .slider {
@@ -80,6 +81,7 @@ body.dark-mode {
     background-color: #ccc;
     transition: 0.3s;
     border-radius: 26px;
+    display: block;
 }
 
 .slider:before {
@@ -92,6 +94,7 @@ body.dark-mode {
     background-color: white;
     transition: 0.3s;
     border-radius: 50%;
+    display: block;
 }
 
 .theme-toggle input:checked + .slider {
