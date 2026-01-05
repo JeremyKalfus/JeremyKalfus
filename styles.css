@@ -66,9 +66,12 @@ body.dark-mode {
 
 .theme-toggle input {
     opacity: 0;
-    width: 0;
-    height: 0;
+    width: 50px;
+    height: 26px;
     position: absolute;
+    z-index: 2;
+    cursor: pointer;
+    margin: 0;
 }
 
 .slider {
@@ -76,12 +79,13 @@ body.dark-mode {
     cursor: pointer;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 50px;
+    height: 26px;
     background-color: #ccc;
     transition: 0.3s;
     border-radius: 26px;
     display: block;
+    z-index: 1;
 }
 
 .slider:before {
