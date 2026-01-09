@@ -1,26 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeLabel = document.getElementById('theme-label');
+    const toggles = document.querySelectorAll('.theme-toggle-checkbox');
+    const labels = document.querySelectorAll('.theme-label');
     const root = document.documentElement;
-
-    if (!themeToggle || !themeLabel) {
-        console.error('Theme toggle elements not found');
-        return;
-    }
 
     const applyTheme = (theme) => {
         const isDark = theme === 'dark';
         root.classList.toggle('dark-mode', isDark);
         root.dataset.theme = theme;
         localStorage.setItem('theme', theme);
-        themeToggle.checked = isDark;
-        themeLabel.textContent = `${theme} mode`;
+        toggles.forEach(t => t.checked = isDark);
+        labels.forEach(l => l.textContent = `${theme} mode`);
     };
 
     const initialTheme = root.dataset.theme === 'dark' ? 'dark' : 'light';
     applyTheme(initialTheme);
 
-    themeToggle.addEventListener('change', () => {
-        applyTheme(themeToggle.checked ? 'dark' : 'light');
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', () => {
+            applyTheme(toggle.checked ? 'dark' : 'light');
+        });
     });
 });

@@ -77,14 +77,26 @@
             </div>
         </section>
 
+        <!-- Mobile theme toggle (in-flow, at bottom of content) -->
+        <div class="theme-toggle-container theme-toggle-mobile">
+            <label class="theme-toggle">
+                <input type="checkbox" class="theme-toggle-checkbox">
+                <span class="slider"></span>
+            </label>
+            <p class="theme-label">light mode</p>
+        </div>
+
     </div>
-    <div class="theme-toggle-container">
+
+    <!-- Desktop theme toggle (fixed position) -->
+    <div class="theme-toggle-container theme-toggle-desktop">
         <label class="theme-toggle">
-            <input type="checkbox" id="theme-toggle">
+            <input type="checkbox" class="theme-toggle-checkbox">
             <span class="slider"></span>
         </label>
-        <p class="theme-label" id="theme-label">light mode</p>
+        <p class="theme-label">light mode</p>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
