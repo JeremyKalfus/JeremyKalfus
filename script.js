@@ -1,36 +1,26 @@
-// Dark mode 
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const themeLabel = document.getElementById('theme-label');
-    const body = document.body;
+    const root = document.documentElement;
 
     if (!themeToggle || !themeLabel) {
         console.error('Theme toggle elements not found');
         return;
     }
 
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    if (currentTheme === 'dark') {
-        body.classList.add('dark-mode');
-        themeToggle.checked = true;
-        themeLabel.textContent = 'dark mode';
-    } else {
-        body.classList.remove('dark-mode');
-        themeToggle.checked = false;
-        themeLabel.textContent = 'light mode';
-    }
+    const applyTheme = (theme) => {
+        const isDark = theme === 'dark';
+        root.classList.toggle('dark-mode', isDark);
+        root.dataset.theme = theme;
+        localStorage.setItem('theme', theme);
+        themeToggle.checked = isDark;
+        themeLabel.textContent = `${theme} mode`;
+    };
 
-    themeToggle.addEventListener('change', function() {
-        if (this.checked) {
-            body.classList.add('dark-mode');
-            localStorage.setItem('theme', 'dark');
-            themeLabel.textContent = 'dark mode';
-        } else {
-            body.classList.remove('dark-mode');
-            localStorage.setItem('theme', 'light');
-            themeLabel.textContent = 'light mode';
-        }
+    const initialTheme = root.dataset.theme === 'dark' ? 'dark' : 'light';
+    applyTheme(initialTheme);
+
+    themeToggle.addEventListener('change', () => {
+        applyTheme(themeToggle.checked ? 'dark' : 'light');
     });
 });
-
