@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeremy Kalfus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
-        // Set the theme before styles load to avoid a flash on first paint
         (function() {
             const storedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -77,7 +79,6 @@
             </div>
         </section>
 
-        <!-- Mobile theme toggle (in-flow, at bottom of content) -->
         <div class="theme-toggle-container theme-toggle-mobile">
             <label class="theme-toggle">
                 <input type="checkbox" class="theme-toggle-checkbox">
@@ -88,7 +89,6 @@
 
     </div>
 
-    <!-- Desktop theme toggle (fixed position) -->
     <div class="theme-toggle-container theme-toggle-desktop">
         <label class="theme-toggle">
             <input type="checkbox" class="theme-toggle-checkbox">
