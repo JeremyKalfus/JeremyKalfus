@@ -6,12 +6,11 @@
     <title>Jeremy Kalfus</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Rethink+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         (function() {
             const storedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const theme = storedTheme || (prefersDark ? 'dark' : 'light');
+            const theme = storedTheme || 'light';
 
             if (theme === 'dark') {
                 document.documentElement.classList.add('dark-mode');
@@ -28,7 +27,7 @@
             <p class="subtitle">Personal website / Portfolio</p>
         </header>
 
-        <section class="blurb">
+        <section class="blurb readable-prose">
             <p>Right now this page is just my work portfolio. Writing samples are not to be considered pieces of academic research but evidence of my writing abilities. Note that any dates in LaTeX are the dates the file was retrieved. Also note that any references to school names have been replaced with "NAME" for privacy.</p>
         </section>
 
