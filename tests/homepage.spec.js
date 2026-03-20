@@ -78,6 +78,9 @@ test.describe("homepage smoke checks", () => {
     await expect(portfolioTab).toHaveAttribute("aria-selected", "true");
     await expect(aboutPanel).toBeHidden();
     await expect(portfolioPanel).toBeVisible();
+    await expect(
+      page.getByText("These writing samples are here as evidence of my writing abilities")
+    ).toHaveCount(0);
     await expect(page.getByRole("heading", { level: 2, name: "Projects" })).toBeVisible();
     await expect(page.getByRole("heading", { level: 2, name: "Writings" })).toBeVisible();
     await expect(page.getByRole("heading", { level: 2, name: "Resume" })).toBeVisible();

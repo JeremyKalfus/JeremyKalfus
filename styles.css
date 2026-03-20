@@ -198,17 +198,9 @@ a {
     border-bottom: 1px solid var(--color-border);
 }
 
-.subtitle {
-    font-family: var(--font-sans);
-    font-size: var(--font-size-subtitle);
-    line-height: var(--line-height-body);
-    color: var(--color-text-secondary);
-    font-weight: 600;
-}
-
 .intro-copy {
     margin: 0 auto;
-    text-align: left;
+    text-align: center;
 }
 
 .intro-copy h1 {
@@ -218,17 +210,7 @@ a {
     line-height: var(--line-height-tight);
     letter-spacing: -0.03em;
     color: var(--color-heading);
-    margin-bottom: var(--space-sm);
-}
-
-.intro-copy p {
-    color: var(--color-text);
-    font-size: var(--font-size-body);
-    line-height: var(--line-height-body);
-}
-
-.intro-copy p + p {
-    margin-top: var(--space-sm);
+    margin-bottom: 0;
 }
 
 .view-switcher {
@@ -236,10 +218,10 @@ a {
     align-items: center;
     gap: var(--space-2xs);
     align-self: center;
-    padding: 0.35rem;
-    border: 1px solid var(--color-border);
+    padding: 0;
+    border: 0;
     border-radius: var(--radius-pill);
-    background-color: rgba(255, 255, 255, 0.72);
+    background-color: transparent;
 }
 
 .view-tab {
@@ -254,13 +236,12 @@ a {
     line-height: 1.2;
     color: var(--color-text-secondary);
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .view-tab[aria-selected="true"] {
     color: var(--color-heading);
     background-color: var(--color-surface);
-    box-shadow: var(--shadow-card);
 }
 
 .view-tab:focus-visible {
@@ -276,15 +257,12 @@ a {
     display: none;
 }
 
-.about-panel,
-.portfolio-intro {
-    max-width: var(--measure-prose);
-}
-
 .about-panel {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    width: min(100%, 78ch);
+    margin: 0 auto;
 }
 
 .about-panel h2 {
@@ -294,19 +272,10 @@ a {
     color: var(--color-heading);
 }
 
-.about-panel p,
-.portfolio-intro p {
+.about-panel p {
     color: var(--color-text);
     font-size: var(--font-size-body);
     line-height: var(--line-height-body);
-}
-
-.portfolio-intro {
-    margin-top: 0.25rem;
-}
-
-.portfolio-intro p + p {
-    margin-top: var(--space-sm);
 }
 
 .portfolio-panel {
@@ -335,17 +304,6 @@ a {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.privacy-note {
-    color: var(--color-text-secondary);
-}
-
-.section-intro {
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-body);
-    line-height: var(--line-height-body);
-    margin-bottom: var(--space-sm);
 }
 
 .projects,
