@@ -231,6 +231,112 @@ a {
     margin-top: var(--space-sm);
 }
 
+.view-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    align-self: center;
+    padding: 0.35rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background-color: rgba(255, 255, 255, 0.72);
+}
+
+.view-tab {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    border-radius: var(--radius-pill);
+    padding: 0.65rem 1rem;
+    font: inherit;
+    font-size: var(--font-size-small);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.view-tab[aria-selected="true"] {
+    color: var(--color-heading);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-card);
+}
+
+.view-tab:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+}
+
+.content-panel {
+    width: 100%;
+}
+
+.content-panel[hidden] {
+    display: none;
+}
+
+.about-panel,
+.portfolio-intro {
+    max-width: var(--measure-prose);
+}
+
+.about-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.about-panel h2 {
+    font-size: var(--font-size-heading);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-heading);
+}
+
+.about-panel p,
+.portfolio-intro p {
+    color: var(--color-text);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+}
+
+.portfolio-intro {
+    margin-top: 0.25rem;
+}
+
+.portfolio-intro p + p {
+    margin-top: var(--space-sm);
+}
+
+.portfolio-panel {
+    display: grid;
+    gap: 0;
+    transform-origin: top center;
+    transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.portfolio-panel[hidden] {
+    display: none;
+}
+
+.portfolio-panel.is-entering,
+.portfolio-panel.is-active {
+    animation: portfolio-drop 0.28s ease both;
+}
+
+@keyframes portfolio-drop {
+    from {
+        opacity: 0;
+        transform: translateY(-0.75rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .privacy-note {
     color: var(--color-text-secondary);
 }
@@ -354,6 +460,16 @@ a {
         margin-bottom: var(--space-xs);
     }
 
+    .view-switcher {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .view-tab {
+        flex: 1;
+        text-align: center;
+    }
+
     .projects,
     .writings,
     .resume {
@@ -419,5 +535,13 @@ a {
 
     .resource-title {
         font-size: 1.1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .view-tab,
+    .portfolio-panel {
+        transition: none;
+        animation: none;
     }
 }

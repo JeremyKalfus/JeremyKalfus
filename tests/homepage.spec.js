@@ -7,7 +7,7 @@ const VIEWPORTS = [
   { width: 1280, height: 900 }
 ];
 
-const EXPECTED_HEADINGS = ["Projects", "Writings", "Resume"];
+const EXPECTED_HEADINGS = ["About me"];
 const EXPECTED_PDFS = [
   "projects/NIM811.pdf",
   "projects/Prospectus.pdf",
@@ -59,8 +59,34 @@ test.describe("homepage smoke checks", () => {
     }
   });
 
+  test("defaults to the about view and switches to portfolio", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    const aboutTab = page.getByRole("tab", { name: "About me" });
+    const portfolioTab = page.getByRole("tab", { name: "Portfolio" });
+    const aboutPanel = page.locator("#about-panel");
+    const portfolioPanel = page.locator("#portfolio-panel");
+
+    await expect(aboutTab).toHaveAttribute("aria-selected", "true");
+    await expect(portfolioTab).toHaveAttribute("aria-selected", "false");
+    await expect(aboutPanel).toBeVisible();
+    await expect(portfolioPanel).toBeHidden();
+
+    await portfolioTab.click();
+
+    await expect(aboutTab).toHaveAttribute("aria-selected", "false");
+    await expect(portfolioTab).toHaveAttribute("aria-selected", "true");
+    await expect(aboutPanel).toBeHidden();
+    await expect(portfolioPanel).toBeVisible();
+    await expect(page.getByRole("heading", { level: 2, name: "Projects" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 2, name: "Writings" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 2, name: "Resume" })).toBeVisible();
+  });
+
   test("uses semantic resource lists", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
+
+    await page.getByRole("tab", { name: "Portfolio" }).click();
 
     await expect(page.getByRole("list")).toHaveCount(3);
     await expect(page.getByRole("listitem")).toHaveCount(8);
@@ -82,6 +108,7 @@ test.describe("homepage smoke checks", () => {
 
   test("exposes valid PDF links", async ({ page, request }) => {
     await page.goto("/", { waitUntil: "networkidle" });
+    await page.getByRole("tab", { name: "Portfolio" }).click();
 
     const links = await page.locator('a[href$=".pdf"]').evaluateAll((nodes) =>
       nodes.map((node) => ({
@@ -101,6 +128,7 @@ test.describe("homepage smoke checks", () => {
 
   test("shows resource metadata and actions on every card", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
+    await page.getByRole("tab", { name: "Portfolio" }).click();
 
     await expect(page.locator(".resource-title")).toHaveCount(8);
     await expect(page.locator(".resource-description")).toHaveCount(8);
@@ -138,6 +166,9 @@ test.describe("homepage smoke checks", () => {
     await expect(root).toHaveAttribute("data-theme", "dark");
     await expect(toggle).toBeChecked();
     await expect(label).toHaveText("Dark");
+
+    await page.getByRole("tab", { name: "Portfolio" }).click();
+    await expect(page.locator("#portfolio-panel")).toBeVisible();
 
     await toggle.uncheck();
     await expect(root).toHaveAttribute("data-theme", "light");

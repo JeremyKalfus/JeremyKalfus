@@ -26,112 +26,162 @@
             <p class="subtitle">Personal website and PDF portfolio</p>
             <div class="intro-copy readable-prose">
                 <h1 id="site-title">Jeremy Kalfus</h1>
-                <p>These writing samples are here as evidence of my writing abilities rather than as pieces of academic research. The linked PDFs remain in their original format so readers can review the documents as submitted.</p>
-                <p class="privacy-note">Dates shown in LaTeX files reflect retrieval dates, and school names have been replaced with "NAME" for privacy.</p>
+                <p>I keep this homepage simple and readable, with portfolio materials and a placeholder about section available from the same entry point.</p>
+            </div>
+            <div class="view-switcher readable-prose" role="tablist" aria-label="Homepage sections">
+                <button
+                    type="button"
+                    class="view-tab"
+                    id="about-tab"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="about-panel"
+                    data-view-target="about"
+                >
+                    About me
+                </button>
+                <button
+                    type="button"
+                    class="view-tab"
+                    id="portfolio-tab"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="portfolio-panel"
+                    data-view-target="portfolio"
+                    tabindex="-1"
+                >
+                    Portfolio
+                </button>
             </div>
         </header>
 
-        <section class="projects" aria-labelledby="projects-heading">
-            <h2 id="projects-heading">Projects</h2>
-            <p class="section-intro readable-prose">Research posters and written research materials in PDF form.</p>
-            <ul class="project-links resource-list">
-                <li class="resource-list-item">
-                    <a href="projects/NIM811.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
-                        <span class="resource-title">AD Treatment Research (Poster)</span>
-                        <span class="resource-description">One-page poster for Alzheimer's disease treatment research.</span>
-                        <span class="resource-meta-row">
-                            <span class="resource-meta">PDF • 1 page</span>
-                            <span class="resource-action">Open PDF</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="resource-list-item">
-                    <a href="projects/Prospectus.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
-                        <span class="resource-title">AD Treatment Research (Proposal)</span>
-                        <span class="resource-description">Three-page proposal for Alzheimer's disease treatment research.</span>
-                        <span class="resource-meta-row">
-                            <span class="resource-meta">PDF • 3 pages</span>
-                            <span class="resource-action">Open PDF</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="resource-list-item">
-                    <a href="projects/DEG.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
-                        <span class="resource-title">DEGs among PTSD and AD</span>
-                        <span class="resource-description">Fifteen-page research write-up on differential gene expression in PTSD and Alzheimer's disease.</span>
-                        <span class="resource-meta-row">
-                            <span class="resource-meta">PDF • 15 pages</span>
-                            <span class="resource-action">Open PDF</span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
+        <section
+            class="content-panel about-panel readable-prose"
+            id="about-panel"
+            role="tabpanel"
+            aria-labelledby="about-tab"
+            data-view-panel="about"
+        >
+            <h2>About me</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id augue ac lectus gravida dictum. Nulla facilisi. Nunc ut risus id purus aliquet interdum vitae vel sem. Sed tempus, ante at tristique ultricies, turpis erat posuere arcu, quis pulvinar ipsum mauris a libero.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices sem non massa aliquam, a ultrices risus placerat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean quis lectus ut sapien luctus tincidunt.</p>
         </section>
 
-        <section class="writings" aria-labelledby="writings-heading">
-            <h2 id="writings-heading">Writings</h2>
-            <p class="section-intro readable-prose">Essay and argument samples in PDF form.</p>
-            <ul class="writing-links resource-list">
-                <li class="resource-list-item">
-                    <a href="writings/APUSHWR.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
-                        <span class="resource-title">Early Women's Rights History (APUSH)</span>
-                        <span class="resource-description">Five-page APUSH essay on early women's rights history.</span>
-                        <span class="resource-meta-row">
-                            <span class="resource-meta">PDF • 5 pages</span>
-                            <span class="resource-action">Open PDF</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="resource-list-item">
-                    <a href="writings/OCP.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
-                        <span class="resource-title">On Collective Punishment (School Newspaper Argument)</span>
-                        <span class="resource-description">Ten-page argument piece on collective punishment written for a school newspaper context.</span>
-                        <span class="resource-meta-row">
-                            <span class="resource-meta">PDF • 10 pages</span>
-                            <span class="resource-action">Open PDF</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="resource-list-item">
-                    <a href="writings/WOTD.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
-                        <span class="resource-title">Laqueur Essay (Death and Dying)</span>
-                        <span class="resource-description">Four-page essay on death and dying centered on Laqueur.</span>
-                        <span class="resource-meta-row">
-                            <span class="resource-meta">PDF • 4 pages</span>
-                            <span class="resource-action">Open PDF</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="resource-list-item">
-                    <a href="writings/OAIC.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
-                        <span class="resource-title">On the Assessment of AI Consciousness (Philosophy of Mind Indep. Study)</span>
-                        <span class="resource-description">Six-page philosophy of mind independent-study essay on AI consciousness assessment.</span>
-                        <span class="resource-meta-row">
-                            <span class="resource-meta">PDF • 6 pages</span>
-                            <span class="resource-action">Open PDF</span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </section>
+        <div
+            class="content-panel portfolio-panel"
+            id="portfolio-panel"
+            role="tabpanel"
+            aria-labelledby="portfolio-tab"
+            data-view-panel="portfolio"
+            hidden
+        >
+            <section class="portfolio-intro readable-prose">
+                <p>These writing samples are here as evidence of my writing abilities rather than as pieces of academic research. The linked PDFs remain in their original format so readers can review the documents as submitted.</p>
+                <p class="privacy-note">Dates shown in LaTeX files reflect retrieval dates, and school names have been replaced with "NAME" for privacy.</p>
+            </section>
+
+            <section class="projects" aria-labelledby="projects-heading">
+                <h2 id="projects-heading">Projects</h2>
+                <p class="section-intro readable-prose">Research posters and written research materials in PDF form.</p>
+                <ul class="project-links resource-list">
+                    <li class="resource-list-item">
+                        <a href="projects/NIM811.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
+                            <span class="resource-title">AD Treatment Research (Poster)</span>
+                            <span class="resource-description">One-page poster for Alzheimer's disease treatment research.</span>
+                            <span class="resource-meta-row">
+                                <span class="resource-meta">PDF • 1 page</span>
+                                <span class="resource-action">Open PDF</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="resource-list-item">
+                        <a href="projects/Prospectus.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
+                            <span class="resource-title">AD Treatment Research (Proposal)</span>
+                            <span class="resource-description">Three-page proposal for Alzheimer's disease treatment research.</span>
+                            <span class="resource-meta-row">
+                                <span class="resource-meta">PDF • 3 pages</span>
+                                <span class="resource-action">Open PDF</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="resource-list-item">
+                        <a href="projects/DEG.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
+                            <span class="resource-title">DEGs among PTSD and AD</span>
+                            <span class="resource-description">Fifteen-page research write-up on differential gene expression in PTSD and Alzheimer's disease.</span>
+                            <span class="resource-meta-row">
+                                <span class="resource-meta">PDF • 15 pages</span>
+                                <span class="resource-action">Open PDF</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="writings" aria-labelledby="writings-heading">
+                <h2 id="writings-heading">Writings</h2>
+                <p class="section-intro readable-prose">Essay and argument samples in PDF form.</p>
+                <ul class="writing-links resource-list">
+                    <li class="resource-list-item">
+                        <a href="writings/APUSHWR.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
+                            <span class="resource-title">Early Women's Rights History (APUSH)</span>
+                            <span class="resource-description">Five-page APUSH essay on early women's rights history.</span>
+                            <span class="resource-meta-row">
+                                <span class="resource-meta">PDF • 5 pages</span>
+                                <span class="resource-action">Open PDF</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="resource-list-item">
+                        <a href="writings/OCP.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
+                            <span class="resource-title">On Collective Punishment (School Newspaper Argument)</span>
+                            <span class="resource-description">Ten-page argument piece on collective punishment written for a school newspaper context.</span>
+                            <span class="resource-meta-row">
+                                <span class="resource-meta">PDF • 10 pages</span>
+                                <span class="resource-action">Open PDF</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="resource-list-item">
+                        <a href="writings/WOTD.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
+                            <span class="resource-title">Laqueur Essay (Death and Dying)</span>
+                            <span class="resource-description">Four-page essay on death and dying centered on Laqueur.</span>
+                            <span class="resource-meta-row">
+                                <span class="resource-meta">PDF • 4 pages</span>
+                                <span class="resource-action">Open PDF</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="resource-list-item">
+                        <a href="writings/OAIC.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
+                            <span class="resource-title">On the Assessment of AI Consciousness (Philosophy of Mind Indep. Study)</span>
+                            <span class="resource-description">Six-page philosophy of mind independent-study essay on AI consciousness assessment.</span>
+                            <span class="resource-meta-row">
+                                <span class="resource-meta">PDF • 6 pages</span>
+                                <span class="resource-action">Open PDF</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
 
 
-        <section class="resume" aria-labelledby="resume-heading">
-            <h2 id="resume-heading">Resume</h2>
-            <p class="section-intro readable-prose">Current resume in PDF form.</p>
-            <ul class="resume-link resource-list">
-                <li class="resource-list-item">
-                    <a href="resume/JK_Resume.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
-                        <span class="resource-title">View Resume (PDF)</span>
-                        <span class="resource-description">Two-page resume in PDF format.</span>
-                        <span class="resource-meta-row">
-                            <span class="resource-meta">PDF • 2 pages</span>
-                            <span class="resource-action">Open PDF</span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </section>
+            <section class="resume" aria-labelledby="resume-heading">
+                <h2 id="resume-heading">Resume</h2>
+                <p class="section-intro readable-prose">Current resume in PDF form.</p>
+                <ul class="resume-link resource-list">
+                    <li class="resource-list-item">
+                        <a href="resume/JK_Resume.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
+                            <span class="resource-title">View Resume (PDF)</span>
+                            <span class="resource-description">Two-page resume in PDF format.</span>
+                            <span class="resource-meta-row">
+                                <span class="resource-meta">PDF • 2 pages</span>
+                                <span class="resource-action">Open PDF</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
 
         <div class="theme-toggle-container readable-prose">
             <p class="theme-heading">Theme</p>
