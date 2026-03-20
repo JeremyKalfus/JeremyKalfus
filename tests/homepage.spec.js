@@ -51,11 +51,19 @@ test.describe("homepage smoke checks", () => {
   test("renders the core headings", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
 
+    await expect(page.getByRole("main")).toBeVisible();
     await expect(page.getByRole("heading", { level: 1, name: "Jeremy Kalfus" })).toBeVisible();
 
     for (const heading of EXPECTED_HEADINGS) {
       await expect(page.getByRole("heading", { level: 2, name: heading })).toBeVisible();
     }
+  });
+
+  test("uses semantic resource lists", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    await expect(page.getByRole("list")).toHaveCount(3);
+    await expect(page.getByRole("listitem")).toHaveCount(8);
   });
 
   test("keeps the layout free of horizontal scrolling", async ({ page }) => {

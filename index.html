@@ -21,61 +21,76 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header class="intro">
-            <h1>Jeremy Kalfus</h1>
-            <p class="subtitle">Personal website / Portfolio</p>
+    <main class="container page-shell" id="content">
+        <header class="intro" aria-labelledby="site-title">
+            <p class="subtitle">Personal website and PDF portfolio</p>
+            <div class="intro-copy readable-prose">
+                <h1 id="site-title">Jeremy Kalfus</h1>
+                <p>These writing samples are here as evidence of my writing abilities rather than as pieces of academic research. The linked PDFs remain in their original format so readers can review the documents as submitted.</p>
+                <p class="privacy-note">Dates shown in LaTeX files reflect retrieval dates, and school names have been replaced with "NAME" for privacy.</p>
+            </div>
         </header>
 
-        <section class="blurb readable-prose">
-            <p>Right now this page is just my work portfolio. Writing samples are not to be considered pieces of academic research but evidence of my writing abilities. Note that any dates in LaTeX are the dates the file was retrieved. Also note that any references to school names have been replaced with "NAME" for privacy.</p>
+        <section class="projects" aria-labelledby="projects-heading">
+            <h2 id="projects-heading">Projects</h2>
+            <p class="section-intro readable-prose">Research posters and written research materials in PDF form.</p>
+            <ul class="project-links resource-list">
+                <li class="resource-list-item">
+                    <a href="projects/NIM811.pdf" class="project-link" target="_blank">
+                        AD Treatment Research (Poster)
+                    </a>
+                </li>
+                <li class="resource-list-item">
+                    <a href="projects/Prospectus.pdf" class="project-link" target="_blank">
+                        AD Treatment Research (Proposal)
+                    </a>
+                </li>
+                <li class="resource-list-item">
+                    <a href="projects/DEG.pdf" class="project-link" target="_blank">
+                        DEGs among PTSD and AD
+                    </a>
+                </li>
+            </ul>
         </section>
 
-        <section class="projects">
-            <h2>Projects</h2>
-            <div class="project-links">
-                <a href="projects/NIM811.pdf" class="project-link" target="_blank">
-                    AD Treatment Research (Poster)
-                </a>
-                <a href="projects/Prospectus.pdf" class="project-link" target="_blank">
-                    AD Treatment Research (Proposal)
-                </a>
-                <a href="projects/DEG.pdf" class="project-link" target="_blank">
-                    DEGs among PTSD and AD 
-                </a>
-
-            </div>
-        </section>
-
-        <section class="writings">
-            <h2>Writings</h2>
-            <div class="writing-links">
-                <a href="writings/APUSHWR.pdf" class="writing-link" target="_blank">
-                    Early Women's Rights History (APUSH)
-                </a>
-                <a href="writings/OCP.pdf" class="writing-link" target="_blank">
-                    On Collective Punishment (School Newspaper Argument)
-                </a>
-                <a href="writings/WOTD.pdf" class="writing-link" target="_blank">
-                    Laqueur Essay (Death and Dying)
-                </a>
-                <a href="writings/OAIC.pdf" class="writing-link" target="_blank">
-                    On the Assessment of AI Consciousness (Philosophy of Mind Indep. Study)
-                </a>
-
-
-
-            </div>
+        <section class="writings" aria-labelledby="writings-heading">
+            <h2 id="writings-heading">Writings</h2>
+            <p class="section-intro readable-prose">Essay and argument samples in PDF form.</p>
+            <ul class="writing-links resource-list">
+                <li class="resource-list-item">
+                    <a href="writings/APUSHWR.pdf" class="writing-link" target="_blank">
+                        Early Women's Rights History (APUSH)
+                    </a>
+                </li>
+                <li class="resource-list-item">
+                    <a href="writings/OCP.pdf" class="writing-link" target="_blank">
+                        On Collective Punishment (School Newspaper Argument)
+                    </a>
+                </li>
+                <li class="resource-list-item">
+                    <a href="writings/WOTD.pdf" class="writing-link" target="_blank">
+                        Laqueur Essay (Death and Dying)
+                    </a>
+                </li>
+                <li class="resource-list-item">
+                    <a href="writings/OAIC.pdf" class="writing-link" target="_blank">
+                        On the Assessment of AI Consciousness (Philosophy of Mind Indep. Study)
+                    </a>
+                </li>
+            </ul>
         </section>
 
 
-        <section class="resume">
-            <h2>Resume</h2>
-            <div class="resume-link">
-                <a href="resume/JK_Resume.pdf" class="project-link" target="_blank">
-                    View Resume (PDF)
-                </a>
-            </div>
+        <section class="resume" aria-labelledby="resume-heading">
+            <h2 id="resume-heading">Resume</h2>
+            <p class="section-intro readable-prose">Current resume in PDF form.</p>
+            <ul class="resume-link resource-list">
+                <li class="resource-list-item">
+                    <a href="resume/JK_Resume.pdf" class="project-link" target="_blank">
+                        View Resume (PDF)
+                    </a>
+                </li>
+            </ul>
         </section>
 
         <div class="theme-toggle-container theme-toggle-mobile">
@@ -86,7 +101,7 @@
             <p class="theme-label">light mode</p>
         </div>
 
-    </div>
+    </main>
 
     <div class="theme-toggle-container theme-toggle-desktop">
         <label class="theme-toggle">

@@ -86,8 +86,12 @@ a {
     padding: var(--space-2xl) var(--space-lg);
 }
 
-.readable-prose,
-.blurb {
+.page-shell {
+    display: flex;
+    flex-direction: column;
+}
+
+.readable-prose {
     max-width: var(--measure-prose);
 }
 
@@ -177,20 +181,13 @@ a {
 }
 
 .intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
     text-align: center;
     margin-bottom: var(--space-xl);
     padding-bottom: var(--space-lg);
     border-bottom: 1px solid var(--color-border);
-}
-
-.intro h1 {
-    font-family: var(--font-display);
-    font-size: var(--font-size-title);
-    font-weight: 500;
-    line-height: var(--line-height-tight);
-    letter-spacing: -0.03em;
-    margin-bottom: var(--space-xs);
-    color: var(--color-heading);
 }
 
 .subtitle {
@@ -198,19 +195,43 @@ a {
     font-size: var(--font-size-subtitle);
     line-height: var(--line-height-body);
     color: var(--color-text-secondary);
-    font-weight: 500;
+    font-weight: 600;
 }
 
-.blurb {
-    margin: var(--space-lg) auto 0;
+.intro-copy {
+    margin: 0 auto;
     text-align: left;
 }
 
-.blurb p {
+.intro-copy h1 {
+    font-family: var(--font-display);
+    font-size: var(--font-size-title);
+    font-weight: 500;
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.03em;
+    color: var(--color-heading);
+    margin-bottom: var(--space-sm);
+}
+
+.intro-copy p {
     color: var(--color-text);
     font-size: var(--font-size-body);
     line-height: var(--line-height-body);
-    margin: 0;
+}
+
+.intro-copy p + p {
+    margin-top: var(--space-sm);
+}
+
+.privacy-note {
+    color: var(--color-text-secondary);
+}
+
+.section-intro {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    margin-bottom: var(--space-md);
 }
 
 .projects,
@@ -235,6 +256,10 @@ a {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+}
+
+.resource-list {
+    list-style: none;
 }
 
 .project-link,
@@ -273,6 +298,10 @@ a {
     .intro {
         margin-bottom: var(--space-lg);
         padding-bottom: var(--space-md);
+    }
+
+    .intro-copy h1 {
+        margin-bottom: var(--space-xs);
     }
 
     .projects,
