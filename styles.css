@@ -76,10 +76,14 @@ body {
     font-size: var(--font-size-body);
     line-height: var(--line-height-body);
     color: var(--color-text);
-    background:
-        radial-gradient(circle at top, rgba(186, 176, 152, 0.12), transparent 28rem),
-        var(--color-bg);
+    background-color: var(--color-bg);
+    background-image: radial-gradient(circle at top, rgba(186, 176, 152, 0.12), transparent 28rem);
+    background-repeat: no-repeat;
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:root.dark-mode body {
+    background-image: none;
 }
 
 a {
