@@ -84,15 +84,28 @@ test.describe("homepage smoke checks", () => {
     await page.goto("/", { waitUntil: "networkidle" });
 
     const links = await page.locator('a[href$=".pdf"]').evaluateAll((nodes) =>
-      nodes.map((node) => node.getAttribute("href"))
+      nodes.map((node) => ({
+        href: node.getAttribute("href"),
+        rel: node.getAttribute("rel")
+      }))
     );
 
-    expect(links).toEqual(EXPECTED_PDFS);
+    expect(links.map((link) => link.href)).toEqual(EXPECTED_PDFS);
+    expect(links.every((link) => link.rel === "noopener noreferrer")).toBeTruthy();
 
-    for (const href of links) {
+    for (const { href } of links) {
       const response = await request.get(href);
       expect(response.ok(), `${href} should return a successful response`).toBeTruthy();
     }
+  });
+
+  test("shows resource metadata and actions on every card", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    await expect(page.locator(".resource-title")).toHaveCount(8);
+    await expect(page.locator(".resource-description")).toHaveCount(8);
+    await expect(page.locator(".resource-meta")).toHaveCount(8);
+    await expect(page.locator(".resource-action")).toHaveCount(8);
   });
 
   test("toggles the theme and persists the choice after reload", async ({ page }) => {
