@@ -1,0 +1,14 @@
+{
+  "name": "jeremykalfus-homepage",
+  "private": true,
+  "version": "1.0.0",
+  "description": "QA harness for the Jeremy Kalfus static homepage",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.54.2"
+  }
+}
