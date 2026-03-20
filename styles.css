@@ -15,6 +15,9 @@
     --color-heading: #111111;
     --color-border: #d8d3c9;
     --color-border-strong: #b8afa0;
+    --color-switcher-border: #d8d3c9;
+    --color-switcher-selected: #d8d3c9;
+    --color-switcher-selected-text: #111111;
     --color-focus: #1d4ed8;
     --color-toggle: #525252;
 
@@ -55,6 +58,9 @@
     --color-heading: #ffffff;
     --color-border: #3b3832;
     --color-border-strong: #5a554d;
+    --color-switcher-border: #5a554d;
+    --color-switcher-selected: #d8d3c9;
+    --color-switcher-selected-text: #111111;
     --color-focus: #93c5fd;
     --color-toggle: #d9d4cc;
 
@@ -218,8 +224,8 @@ a {
     align-items: center;
     gap: var(--space-2xs);
     align-self: center;
-    padding: 0;
-    border: 0;
+    padding: 0.35rem;
+    border: 1px solid var(--color-switcher-border);
     border-radius: var(--radius-pill);
     background-color: transparent;
 }
@@ -240,8 +246,9 @@ a {
 }
 
 .view-tab[aria-selected="true"] {
-    color: var(--color-heading);
-    background-color: var(--color-surface);
+    color: var(--color-switcher-selected-text);
+    background-color: var(--color-switcher-selected);
+    box-shadow: var(--shadow-card);
 }
 
 .view-tab:focus-visible {
@@ -261,8 +268,8 @@ a {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
-    width: min(100%, 78ch);
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
 }
 
 .about-panel h2 {
@@ -276,6 +283,8 @@ a {
     color: var(--color-text);
     font-size: var(--font-size-body);
     line-height: var(--line-height-body);
+    max-width: none;
+    text-wrap: pretty;
 }
 
 .portfolio-panel {
