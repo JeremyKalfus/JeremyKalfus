@@ -119,23 +119,29 @@ test.describe("homepage smoke checks", () => {
 
     await page.goto("/", { waitUntil: "networkidle" });
 
-    const toggle = page.locator(".theme-toggle-desktop .theme-toggle-checkbox");
+    const toggle = page.locator(".theme-toggle-checkbox");
+    const label = page.locator(".theme-label");
     const root = page.locator("html");
 
+    await expect(toggle).toHaveCount(1);
     await expect(toggle).not.toBeChecked();
     await expect(root).toHaveAttribute("data-theme", "light");
+    await expect(label).toHaveText("Light");
 
     await toggle.check();
     await expect(root).toHaveAttribute("data-theme", "dark");
     await expect(toggle).toBeChecked();
+    await expect(label).toHaveText("Dark");
 
     await page.reload({ waitUntil: "networkidle" });
 
     await expect(root).toHaveAttribute("data-theme", "dark");
     await expect(toggle).toBeChecked();
+    await expect(label).toHaveText("Dark");
 
     await toggle.uncheck();
     await expect(root).toHaveAttribute("data-theme", "light");
+    await expect(label).toHaveText("Light");
   });
 
   test("has no critical accessibility violations on the homepage", async ({ page }) => {

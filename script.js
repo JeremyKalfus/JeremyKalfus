@@ -1,23 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const toggles = document.querySelectorAll('.theme-toggle-checkbox');
-    const labels = document.querySelectorAll('.theme-label');
+    const toggle = document.querySelector('.theme-toggle-checkbox');
+    const label = document.querySelector('.theme-label');
     const root = document.documentElement;
+
+    if (!toggle || !label) {
+        return;
+    }
 
     const applyTheme = (theme) => {
         const isDark = theme === 'dark';
         root.classList.toggle('dark-mode', isDark);
         root.dataset.theme = theme;
         localStorage.setItem('theme', theme);
-        toggles.forEach(t => t.checked = isDark);
-        labels.forEach(l => l.textContent = `${theme} mode`);
+        toggle.checked = isDark;
+        label.textContent = isDark ? 'Dark' : 'Light';
     };
 
     const initialTheme = root.dataset.theme === 'dark' ? 'dark' : 'light';
     applyTheme(initialTheme);
 
-    toggles.forEach(toggle => {
-        toggle.addEventListener('change', () => {
-            applyTheme(toggle.checked ? 'dark' : 'light');
-        });
+    toggle.addEventListener('change', () => {
+        applyTheme(toggle.checked ? 'dark' : 'light');
     });
 });

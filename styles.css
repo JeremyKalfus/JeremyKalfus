@@ -97,20 +97,25 @@ a {
 
 .theme-toggle-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: var(--space-2xs);
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
 }
 
-.theme-toggle-desktop {
-    position: fixed;
-    top: var(--space-md);
-    right: var(--space-md);
-    z-index: 1000;
+.theme-heading {
+    color: var(--color-heading);
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-body);
+    font-weight: 600;
 }
 
-.theme-toggle-mobile {
-    display: none;
+.theme-toggle-control {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
 }
 
 .theme-label {
@@ -118,7 +123,8 @@ a {
     font-size: var(--font-size-small);
     line-height: var(--line-height-body);
     margin: 0;
-    text-align: center;
+    min-width: 3.5rem;
+    text-align: left;
 }
 
 .theme-toggle {
@@ -352,19 +358,13 @@ a {
         margin-top: var(--space-lg);
     }
 
-    .theme-toggle-desktop {
-        display: none;
-    }
-
-    .theme-toggle-mobile {
+    .theme-toggle-container {
         display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: var(--space-xs);
-        margin-top: var(--space-xl);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+        margin-top: var(--space-lg);
         padding-top: var(--space-md);
-        border-top: 1px solid var(--color-border);
     }
 
     .theme-toggle {
