@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Rethink+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
     <script>
         (function() {
             const storedTheme = localStorage.getItem('theme');
@@ -61,8 +62,8 @@
             data-view-panel="about"
         >
             <h2>About me</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id augue ac lectus gravida dictum. Nulla facilisi. Nunc ut risus id purus aliquet interdum vitae vel sem. Sed tempus, ante at tristique ultricies, turpis erat posuere arcu, quis pulvinar ipsum mauris a libero.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices sem non massa aliquam, a ultrices risus placerat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean quis lectus ut sapien luctus tincidunt.</p>
+            <p>I have always loved learning about all kinds of science and building things. My interests are much too diverse to qualify, but my main obsessions are more often in brain-related things (neuroscience, cognition, neurodegenerative disease, brain preservation) and ML.</p>
+            <p>This website is a work-in-progress and is often changing. It is currently designed in an attempt to balance maximum readability (note large font, spaced lines, Noto Sans) with somewhat aestheitically pleasing UI. Neither this page nor my resume reflects all of the things I know/have done/am working on. If you are interesting in talking, email me at jeremykalfus [at] gmail [dot] com.</p>
         </section>
 
         <div
@@ -75,82 +76,75 @@
         >
             <section class="projects" aria-labelledby="projects-heading">
                 <h2 id="projects-heading">Projects</h2>
-                <ul class="project-links resource-list">
-                    <li class="resource-list-item">
-                        <a href="projects/NIM811.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
-                            <span class="resource-title">AD Treatment Research (Poster)</span>
-                            <span class="resource-description">One-page poster for Alzheimer's disease treatment research.</span>
-                            <span class="resource-meta-row">
-                                <span class="resource-meta">PDF • 1 page</span>
-                                <span class="resource-action">Open PDF</span>
-                            </span>
-                        </a>
+                <ul class="tree-list" aria-label="Projects">
+                    <li class="tree-item">
+                        <span class="tree-prefix" aria-hidden="true">├──</span>
+                        <a href="https://apps.apple.com/us/app/zenith-legal/id6759677619" class="tree-link" target="_blank" rel="noopener noreferrer">Zenith Legal app</a>
+                        <span class="tree-meta">iOS app</span>
                     </li>
-                    <li class="resource-list-item">
-                        <a href="projects/Prospectus.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
-                            <span class="resource-title">AD Treatment Research (Proposal)</span>
-                            <span class="resource-description">Three-page proposal for Alzheimer's disease treatment research.</span>
-                            <span class="resource-meta-row">
-                                <span class="resource-meta">PDF • 3 pages</span>
-                                <span class="resource-action">Open PDF</span>
-                            </span>
-                        </a>
+                    <li class="tree-item">
+                        <span class="tree-prefix" aria-hidden="true">├──</span>
+                        <a href="https://chromewebstore.google.com/detail/synthesize/cjohkbmdjbcbchkoojchlanfpojilcpg" class="tree-link" target="_blank" rel="noopener noreferrer">Synthesize</a>
+                        <span class="tree-meta">Chrome extension</span>
                     </li>
-                    <li class="resource-list-item">
-                        <a href="projects/DEG.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
-                            <span class="resource-title">DEGs among PTSD and AD</span>
-                            <span class="resource-description">Fifteen-page research write-up on differential gene expression in PTSD and Alzheimer's disease.</span>
-                            <span class="resource-meta-row">
-                                <span class="resource-meta">PDF • 15 pages</span>
-                                <span class="resource-action">Open PDF</span>
-                            </span>
-                        </a>
+                    <li class="tree-item">
+                        <span class="tree-prefix" aria-hidden="true">└──</span>
+                        <a href="https://tauisprings.wixsite.com/tauai/blank-1" class="tree-link" target="_blank" rel="noopener noreferrer">Tau AI</a>
+                        <span class="tree-meta">Website</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="research" aria-labelledby="research-heading">
+                <h2 id="research-heading">Research</h2>
+                <ul class="tree-list" aria-label="Research">
+                    <li class="tree-item tree-item--branch">
+                        <span class="tree-prefix" aria-hidden="true">├──</span>
+                        <span class="tree-label">Alzheimer&apos;s Treatment</span>
+                        <span class="tree-meta">2 items</span>
+                        <ul class="tree-list tree-list--nested" aria-label="Alzheimer's Treatment">
+                            <li class="tree-item">
+                                <span class="tree-prefix" aria-hidden="true">├──</span>
+                                <a href="projects/NIM811.pdf" class="tree-link" target="_blank" rel="noopener noreferrer">AD Treatment Research (Poster)</a>
+                                <span class="tree-meta">PDF • 1 page</span>
+                            </li>
+                            <li class="tree-item">
+                                <span class="tree-prefix" aria-hidden="true">└──</span>
+                                <a href="projects/Prospectus.pdf" class="tree-link" target="_blank" rel="noopener noreferrer">AD Treatment Research (Proposal)</a>
+                                <span class="tree-meta">PDF • 3 pages</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="tree-item">
+                        <span class="tree-prefix" aria-hidden="true">└──</span>
+                        <a href="projects/DEG.pdf" class="tree-link" target="_blank" rel="noopener noreferrer">DEGs among PTSD and AD</a>
+                        <span class="tree-meta">PDF • 15 pages</span>
                     </li>
                 </ul>
             </section>
 
             <section class="writings" aria-labelledby="writings-heading">
                 <h2 id="writings-heading">Writings</h2>
-                <ul class="writing-links resource-list">
-                    <li class="resource-list-item">
-                        <a href="writings/APUSHWR.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
-                            <span class="resource-title">Early Women's Rights History (APUSH)</span>
-                            <span class="resource-description">Five-page APUSH essay on early women's rights history.</span>
-                            <span class="resource-meta-row">
-                                <span class="resource-meta">PDF • 5 pages</span>
-                                <span class="resource-action">Open PDF</span>
-                            </span>
-                        </a>
+                <ul class="tree-list" aria-label="Writings">
+                    <li class="tree-item">
+                        <span class="tree-prefix" aria-hidden="true">├──</span>
+                        <a href="writings/APUSHWR.pdf" class="tree-link" target="_blank" rel="noopener noreferrer">Early Women's Rights History (APUSH)</a>
+                        <span class="tree-meta">PDF • 5 pages</span>
                     </li>
-                    <li class="resource-list-item">
-                        <a href="writings/OCP.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
-                            <span class="resource-title">On Collective Punishment (School Newspaper Argument)</span>
-                            <span class="resource-description">Ten-page argument piece on collective punishment written for a school newspaper context.</span>
-                            <span class="resource-meta-row">
-                                <span class="resource-meta">PDF • 10 pages</span>
-                                <span class="resource-action">Open PDF</span>
-                            </span>
-                        </a>
+                    <li class="tree-item">
+                        <span class="tree-prefix" aria-hidden="true">├──</span>
+                        <a href="writings/OCP.pdf" class="tree-link" target="_blank" rel="noopener noreferrer">On Collective Punishment (School Newspaper Argument)</a>
+                        <span class="tree-meta">PDF • 10 pages</span>
                     </li>
-                    <li class="resource-list-item">
-                        <a href="writings/WOTD.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
-                            <span class="resource-title">Laqueur Essay (Death and Dying)</span>
-                            <span class="resource-description">Four-page essay on death and dying centered on Laqueur.</span>
-                            <span class="resource-meta-row">
-                                <span class="resource-meta">PDF • 4 pages</span>
-                                <span class="resource-action">Open PDF</span>
-                            </span>
-                        </a>
+                    <li class="tree-item">
+                        <span class="tree-prefix" aria-hidden="true">├──</span>
+                        <a href="writings/WOTD.pdf" class="tree-link" target="_blank" rel="noopener noreferrer">Laqueur Essay (Death and Dying)</a>
+                        <span class="tree-meta">PDF • 4 pages</span>
                     </li>
-                    <li class="resource-list-item">
-                        <a href="writings/OAIC.pdf" class="writing-link resource-card" target="_blank" rel="noopener noreferrer">
-                            <span class="resource-title">On the Assessment of AI Consciousness (Philosophy of Mind Indep. Study)</span>
-                            <span class="resource-description">Six-page philosophy of mind independent-study essay on AI consciousness assessment.</span>
-                            <span class="resource-meta-row">
-                                <span class="resource-meta">PDF • 6 pages</span>
-                                <span class="resource-action">Open PDF</span>
-                            </span>
-                        </a>
+                    <li class="tree-item">
+                        <span class="tree-prefix" aria-hidden="true">└──</span>
+                        <a href="writings/OAIC.pdf" class="tree-link" target="_blank" rel="noopener noreferrer">On the Assessment of AI Consciousness (Philosophy of Mind Indep. Study)</a>
+                        <span class="tree-meta">PDF • 6 pages</span>
                     </li>
                 </ul>
             </section>
@@ -158,16 +152,11 @@
 
             <section class="resume" aria-labelledby="resume-heading">
                 <h2 id="resume-heading">Resume</h2>
-                <ul class="resume-link resource-list">
-                    <li class="resource-list-item">
-                        <a href="resume/JK_Resume.pdf" class="project-link resource-card" target="_blank" rel="noopener noreferrer">
-                            <span class="resource-title">View Resume (PDF)</span>
-                            <span class="resource-description">Two-page resume in PDF format.</span>
-                            <span class="resource-meta-row">
-                                <span class="resource-meta">PDF • 2 pages</span>
-                                <span class="resource-action">Open PDF</span>
-                            </span>
-                        </a>
+                <ul class="tree-list" aria-label="Resume">
+                    <li class="tree-item">
+                        <span class="tree-prefix" aria-hidden="true">└──</span>
+                        <a href="resume/JK_Resume.pdf" class="tree-link" target="_blank" rel="noopener noreferrer">View Resume (PDF)</a>
+                        <span class="tree-meta">PDF • 2 pages</span>
                     </li>
                 </ul>
             </section>

@@ -19,6 +19,20 @@ const EXPECTED_PDFS = [
   "resume/JK_Resume.pdf"
 ];
 
+const PORTFOLIO_META_LABELS = [
+  "iOS app",
+  "Chrome extension",
+  "Website",
+  "PDF • 1 page",
+  "PDF • 3 pages",
+  "PDF • 15 pages",
+  "PDF • 5 pages",
+  "PDF • 10 pages",
+  "PDF • 4 pages",
+  "PDF • 6 pages",
+  "PDF • 2 pages"
+];
+
 test.describe("homepage smoke checks", () => {
   test("loads without console or page errors", async ({ page }) => {
     const consoleErrors = [];
@@ -81,18 +95,24 @@ test.describe("homepage smoke checks", () => {
     await expect(
       page.getByText("These writing samples are here as evidence of my writing abilities")
     ).toHaveCount(0);
-    await expect(page.getByRole("heading", { level: 2, name: "Projects" })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 2, name: "Writings" })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 2, name: "Resume" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("heading", { level: 2, name: "Projects" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("heading", { level: 2, name: "Research" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("heading", { level: 2, name: "Writings" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("heading", { level: 2, name: "Resume" })).toBeVisible();
+    await expect(portfolioPanel.locator(".resource-description")).toHaveCount(0);
+    await expect(portfolioPanel.locator(".resource-meta-row")).toHaveCount(0);
+    await expect(portfolioPanel.locator(".resource-meta")).toHaveCount(0);
+    await expect(portfolioPanel.locator(".resource-action")).toHaveCount(0);
   });
 
-  test("uses semantic resource lists", async ({ page }) => {
+  test("uses semantic portfolio lists", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
 
+    const portfolioPanel = page.locator("#portfolio-panel");
     await page.getByRole("tab", { name: "Portfolio" }).click();
 
-    await expect(page.getByRole("list")).toHaveCount(3);
-    await expect(page.getByRole("listitem")).toHaveCount(8);
+    await expect(portfolioPanel.getByRole("list")).toHaveCount(5);
+    await expect(portfolioPanel.getByRole("listitem")).toHaveCount(12);
   });
 
   test("keeps the layout free of horizontal scrolling", async ({ page }) => {
@@ -111,9 +131,10 @@ test.describe("homepage smoke checks", () => {
 
   test("exposes valid PDF links", async ({ page, request }) => {
     await page.goto("/", { waitUntil: "networkidle" });
+    const portfolioPanel = page.locator("#portfolio-panel");
     await page.getByRole("tab", { name: "Portfolio" }).click();
 
-    const links = await page.locator('a[href$=".pdf"]').evaluateAll((nodes) =>
+    const links = await portfolioPanel.locator('a[href$=".pdf"]').evaluateAll((nodes) =>
       nodes.map((node) => ({
         href: node.getAttribute("href"),
         rel: node.getAttribute("rel")
@@ -129,14 +150,55 @@ test.describe("homepage smoke checks", () => {
     }
   });
 
-  test("shows resource metadata and actions on every card", async ({ page }) => {
+  test("shows portfolio tree links for every entry", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
+    const portfolioPanel = page.locator("#portfolio-panel");
     await page.getByRole("tab", { name: "Portfolio" }).click();
 
-    await expect(page.locator(".resource-title")).toHaveCount(8);
-    await expect(page.locator(".resource-description")).toHaveCount(8);
-    await expect(page.locator(".resource-meta")).toHaveCount(8);
-    await expect(page.locator(".resource-action")).toHaveCount(8);
+    await expect(portfolioPanel.getByRole("link", { name: "Zenith Legal app" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("link", { name: "Synthesize" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("link", { name: "Tau AI" })).toBeVisible();
+    await expect(
+      portfolioPanel.getByText("Alzheimer's Treatment", { exact: true })
+    ).toBeVisible();
+    await expect(portfolioPanel.getByRole("link", { name: "AD Treatment Research (Poster)" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("link", { name: "AD Treatment Research (Proposal)" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("link", { name: "DEGs among PTSD and AD" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("link", { name: "Early Women's Rights History (APUSH)" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("link", { name: "On Collective Punishment (School Newspaper Argument)" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("link", { name: "Laqueur Essay (Death and Dying)" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("link", { name: "On the Assessment of AI Consciousness (Philosophy of Mind Indep. Study)" })).toBeVisible();
+    await expect(portfolioPanel.getByRole("link", { name: "View Resume (PDF)" })).toBeVisible();
+  });
+
+  test("renders metadata labels in the portfolio DOM", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    const portfolioPanel = page.locator("#portfolio-panel");
+    await page.getByRole("tab", { name: "Portfolio" }).click();
+
+    for (const label of PORTFOLIO_META_LABELS) {
+      await expect(portfolioPanel.getByText(label, { exact: true }).first()).toBeVisible();
+    }
+  });
+
+  test("renders tree prefixes in the portfolio DOM", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+
+    const portfolioPanel = page.locator("#portfolio-panel");
+    await page.getByRole("tab", { name: "Portfolio" }).click();
+
+    const rowTexts = await portfolioPanel.locator("li").evaluateAll((nodes) =>
+      nodes.map((node) => (node.textContent || "").trim())
+    );
+
+    expect(rowTexts).toHaveLength(12);
+    expect(rowTexts.every((text) => /^[├└│]/.test(text))).toBeTruthy();
+    expect(rowTexts.some((text) => text.includes("Alzheimer's Treatment"))).toBeTruthy();
+    expect(
+      rowTexts.some((text) => PORTFOLIO_META_LABELS.some((label) => text.includes(label)))
+    ).toBeTruthy();
+    expect(rowTexts.every((text) => !/Open PDF|description/i.test(text))).toBeTruthy();
   });
 
   test("toggles the theme and persists the choice after reload", async ({ page }) => {

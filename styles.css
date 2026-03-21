@@ -321,12 +321,18 @@ a {
 }
 
 .projects,
+.research,
 .writings,
 .resume {
-    margin-top: 2.5rem;
+    margin-top: 2rem;
+}
+
+.portfolio-panel > section:first-child {
+    margin-top: 0;
 }
 
 .projects h2,
+.research h2,
 .writings h2,
 .resume h2 {
     font-size: var(--font-size-heading);
@@ -336,86 +342,74 @@ a {
     color: var(--color-heading);
 }
 
-.project-links,
-.writing-links,
-.resume-link {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-}
-
-.resource-list {
+.tree-list {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.project-link,
-.writing-link {
-    display: block;
-    padding: 1.1rem 1.35rem;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-card);
-    text-decoration: none;
-    color: var(--color-text);
-    font-size: var(--font-size-small);
-    line-height: 1.45;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-    box-shadow: var(--shadow-card);
+.tree-list--nested {
+    grid-column: 2 / 4;
+    margin-top: calc(var(--space-2xs) * 0.75);
+    padding-left: 0.575rem;
 }
 
-.project-link:hover,
-.writing-link:hover {
-    border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-card-hover);
-    transform: translateY(-1px);
-}
-
-.project-link:focus-visible,
-.writing-link:focus-visible {
-    outline: 3px solid var(--color-focus);
-    outline-offset: 4px;
-}
-
-.resource-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-}
-
-.resource-title {
-    font-size: 1.05rem;
-    font-weight: 600;
-    line-height: 1.35;
-    color: var(--color-heading);
-}
-
-.resource-description {
+.tree-item {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: var(--space-xs);
+    margin-top: var(--space-xs);
     font-size: var(--font-size-small);
     line-height: var(--line-height-body);
-    color: var(--color-text);
 }
 
-.resource-meta-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
+.tree-item--branch {
+    margin-bottom: 0;
+}
+
+.tree-list--nested .tree-item {
+    margin-top: calc(var(--space-xs) * 0.75);
+}
+
+.tree-prefix {
     color: var(--color-text-secondary);
+    font-family: ui-monospace, "SFMono-Regular", "SF Mono", Consolas, monospace;
+    white-space: pre;
 }
 
-.resource-meta {
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-body);
+.tree-label {
+    color: var(--color-text);
+    font-weight: 500;
 }
 
-.resource-action {
-    font-size: var(--font-size-small);
-    font-weight: 600;
-    line-height: var(--line-height-body);
+.tree-meta {
+    justify-self: end;
+    color: var(--color-text);
+    opacity: 0.4;
+    white-space: nowrap;
+}
+
+.tree-link {
+    color: var(--color-text);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
+    overflow-wrap: anywhere;
+    transition: color 0.2s ease;
+}
+
+.tree-link:visited {
+    color: var(--color-text);
+}
+
+.tree-link:hover {
     color: var(--color-heading);
+}
+
+.tree-link:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+    border-radius: 2px;
 }
 
 @media (max-width: 600px) {
@@ -442,10 +436,25 @@ a {
         text-align: center;
     }
 
+    .tree-item {
+        grid-template-columns: max-content minmax(0, 1fr);
+    }
+
+    .tree-meta {
+        grid-column: 2;
+        justify-self: start;
+        margin-top: 0.1rem;
+    }
+
     .projects,
+    .research,
     .writings,
     .resume {
         margin-top: 2rem;
+    }
+
+    .portfolio-panel > section:first-child {
+        margin-top: 0;
     }
 
     .theme-toggle-container {
@@ -480,33 +489,15 @@ a {
         transform: translateX(28px);
     }
 
-    .project-link,
-    .writing-link {
-        padding: 1rem;
-    }
-
-    .resource-title,
-    .resource-description,
-    .resource-meta,
-    .resource-action,
     .theme-label,
     .theme-heading {
         font-size: 1rem;
     }
-
-    .resource-meta-row {
-        align-items: flex-start;
-    }
 }
 
 @media (min-width: 901px) {
-    .project-link,
-    .writing-link {
-        padding: 1.3rem 1.5rem;
-    }
-
-    .resource-title {
-        font-size: 1.1rem;
+    .tree-item {
+        font-size: 1.05rem;
     }
 }
 
