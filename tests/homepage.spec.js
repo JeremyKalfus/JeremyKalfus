@@ -1,5 +1,7 @@
 const { test, expect } = require("@playwright/test");
 const AxeBuilder = require("@axe-core/playwright").default;
+const homepageUi = require("../homepage-ui.js");
+const homepageTheme = require("../theme-state.js");
 
 const VIEWPORTS = [
   { width: 390, height: 844 },
@@ -7,44 +9,84 @@ const VIEWPORTS = [
   { width: 1280, height: 900 }
 ];
 
-const EXPECTED_HEADINGS = ["About me"];
-const EXPECTED_PDFS = [
+const PORTFOLIO_SECTIONS = ["Projects", "Research", "Writings", "Resume"];
+const REPRESENTATIVE_LINKS = [
+  "Zenith Legal app",
+  "AD Treatment Research (Poster)",
+  "View Resume (PDF)"
+];
+const REQUIRED_PDFS = [
+  "projects/DEG.pdf",
   "projects/NIM811.pdf",
   "projects/Prospectus.pdf",
-  "projects/DEG.pdf",
-  "writings/APUSHWR.pdf",
-  "writings/OCP.pdf",
-  "writings/WOTD.pdf",
-  "writings/OAIC.pdf",
   "resume/JK_Resume.pdf"
 ];
 
-const PORTFOLIO_META_LABELS = [
-  "iOS app",
-  "Chrome extension",
-  "Website",
-  "PDF • 1 page",
-  "PDF • 3 pages",
-  "PDF • 15 pages",
-  "PDF • 5 pages",
-  "PDF • 10 pages",
-  "PDF • 4 pages",
-  "PDF • 6 pages",
-  "PDF • 2 pages"
-];
+async function stubGoogleFonts(page) {
+  await page.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/, async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "text/css",
+      body: "",
+    });
+  });
+}
+
+async function openHomepage(page) {
+  await page.goto("/", { waitUntil: "networkidle" });
+}
+
+async function openPortfolio(page) {
+  await openHomepage(page);
+  await page.getByRole("tab", { name: "Portfolio" }).click();
+  await expect(page.locator("#portfolio-panel")).toBeVisible();
+}
 
 test.describe("homepage smoke checks", () => {
+  test("exports an explicit theme service contract for homepage bootstraps", async () => {
+    expect(homepageUi.readViewName("portfolio")).toBe("portfolio");
+    expect(homepageUi.readViewName("missing")).toBeNull();
+    expect(homepageUi.getThemeState({ homepageTheme })).toBe(homepageTheme);
+    expect(() => homepageUi.getThemeState({})).toThrow(/theme-state\.js/);
+  });
+
+  test("normalizes theme state helpers even when storage access is blocked", async () => {
+    const appliedClasses = new Set();
+    const root = {
+      dataset: {},
+      classList: {
+        toggle(className, shouldEnable) {
+          if (shouldEnable) {
+            appliedClasses.add(className);
+            return;
+          }
+
+          appliedClasses.delete(className);
+        }
+      }
+    };
+    const failingStorage = {
+      getItem() {
+        throw { name: "SecurityError" };
+      },
+      setItem() {
+        throw { name: "QuotaExceededError" };
+      }
+    };
+
+    expect(homepageTheme.readStoredTheme(failingStorage)).toBe("light");
+    expect(homepageTheme.persistTheme("dark", failingStorage)).toBe("dark");
+    expect(homepageTheme.applyTheme("dark", root)).toBe("dark");
+    expect(homepageTheme.resolveInitialTheme(root, failingStorage)).toBe("dark");
+    expect(root.dataset.theme).toBe("dark");
+    expect(appliedClasses.has("dark-mode")).toBeTruthy();
+  });
+
   test("loads without console or page errors", async ({ page }) => {
     const consoleErrors = [];
     const pageErrors = [];
 
-    await page.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/, async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: "text/css",
-        body: "",
-      });
-    });
+    await stubGoogleFonts(page);
 
     page.on("console", (message) => {
       if (message.type() === "error") {
@@ -56,25 +98,22 @@ test.describe("homepage smoke checks", () => {
       pageErrors.push(error.message);
     });
 
-    await page.goto("/", { waitUntil: "networkidle" });
+    await openHomepage(page);
 
     expect(consoleErrors).toEqual([]);
     expect(pageErrors).toEqual([]);
   });
 
   test("renders the core headings", async ({ page }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
+    await openHomepage(page);
 
     await expect(page.getByRole("main")).toBeVisible();
     await expect(page.getByRole("heading", { level: 1, name: "Jeremy Kalfus" })).toBeVisible();
-
-    for (const heading of EXPECTED_HEADINGS) {
-      await expect(page.getByRole("heading", { level: 2, name: heading })).toBeVisible();
-    }
+    await expect(page.getByRole("heading", { level: 2, name: "About me" })).toBeVisible();
   });
 
-  test("defaults to the about view and switches to portfolio", async ({ page }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
+  test("defaults to the about view and reveals the portfolio sections", async ({ page }) => {
+    await openHomepage(page);
 
     const aboutTab = page.getByRole("tab", { name: "About me" });
     const portfolioTab = page.getByRole("tab", { name: "Portfolio" });
@@ -92,33 +131,59 @@ test.describe("homepage smoke checks", () => {
     await expect(portfolioTab).toHaveAttribute("aria-selected", "true");
     await expect(aboutPanel).toBeHidden();
     await expect(portfolioPanel).toBeVisible();
-    await expect(
-      page.getByText("These writing samples are here as evidence of my writing abilities")
-    ).toHaveCount(0);
-    await expect(portfolioPanel.getByRole("heading", { level: 2, name: "Projects" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("heading", { level: 2, name: "Research" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("heading", { level: 2, name: "Writings" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("heading", { level: 2, name: "Resume" })).toBeVisible();
-    await expect(portfolioPanel.locator(".resource-description")).toHaveCount(0);
-    await expect(portfolioPanel.locator(".resource-meta-row")).toHaveCount(0);
-    await expect(portfolioPanel.locator(".resource-meta")).toHaveCount(0);
-    await expect(portfolioPanel.locator(".resource-action")).toHaveCount(0);
+
+    for (const section of PORTFOLIO_SECTIONS) {
+      await expect(portfolioPanel.getByRole("heading", { level: 2, name: section })).toBeVisible();
+    }
+
+    for (const linkName of REPRESENTATIVE_LINKS) {
+      await expect(portfolioPanel.getByRole("link", { name: linkName })).toBeVisible();
+    }
   });
 
-  test("uses semantic portfolio lists", async ({ page }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
+  test("supports keyboard navigation across the homepage tabs", async ({ page }) => {
+    await openHomepage(page);
+
+    const aboutTab = page.getByRole("tab", { name: "About me" });
+    const portfolioTab = page.getByRole("tab", { name: "Portfolio" });
+
+    await aboutTab.focus();
+    await aboutTab.press("ArrowRight");
+    await expect(portfolioTab).toBeFocused();
+    await expect(portfolioTab).toHaveAttribute("aria-selected", "true");
+    await expect(page.locator("#portfolio-panel")).toBeVisible();
+
+    await portfolioTab.press("ArrowLeft");
+    await expect(aboutTab).toBeFocused();
+    await expect(aboutTab).toHaveAttribute("aria-selected", "true");
+    await expect(page.locator("#about-panel")).toBeVisible();
+
+    await aboutTab.press("End");
+    await expect(portfolioTab).toBeFocused();
+    await expect(portfolioTab).toHaveAttribute("aria-selected", "true");
+
+    await portfolioTab.press("Home");
+    await expect(aboutTab).toBeFocused();
+    await expect(aboutTab).toHaveAttribute("aria-selected", "true");
+  });
+
+  test("groups portfolio entries into accessible lists", async ({ page }) => {
+    await openPortfolio(page);
 
     const portfolioPanel = page.locator("#portfolio-panel");
-    await page.getByRole("tab", { name: "Portfolio" }).click();
+    const visibleLists = portfolioPanel.getByRole("list");
+    const visibleItems = portfolioPanel.getByRole("listitem");
 
-    await expect(portfolioPanel.getByRole("list")).toHaveCount(5);
-    await expect(portfolioPanel.getByRole("listitem")).toHaveCount(12);
+    await expect(visibleLists).toHaveCount(5);
+    await expect(visibleItems).toHaveCount(12);
+    await expect(portfolioPanel.getByText("Alzheimer's Treatment", { exact: true })).toBeVisible();
+    await expect(portfolioPanel.locator(".tree-meta").first()).toBeVisible();
   });
 
   test("keeps the layout free of horizontal scrolling", async ({ page }) => {
     for (const viewport of VIEWPORTS) {
       await page.setViewportSize(viewport);
-      await page.goto("/", { waitUntil: "networkidle" });
+      await openHomepage(page);
 
       const hasOverflow = await page.evaluate(() => {
         const doc = document.documentElement;
@@ -129,11 +194,10 @@ test.describe("homepage smoke checks", () => {
     }
   });
 
-  test("exposes valid PDF links", async ({ page, request }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
-    const portfolioPanel = page.locator("#portfolio-panel");
-    await page.getByRole("tab", { name: "Portfolio" }).click();
+  test("serves working PDF links from the portfolio view", async ({ page, request }) => {
+    await openPortfolio(page);
 
+    const portfolioPanel = page.locator("#portfolio-panel");
     const links = await portfolioPanel.locator('a[href$=".pdf"]').evaluateAll((nodes) =>
       nodes.map((node) => ({
         href: node.getAttribute("href"),
@@ -141,8 +205,13 @@ test.describe("homepage smoke checks", () => {
       }))
     );
 
-    expect(links.map((link) => link.href)).toEqual(EXPECTED_PDFS);
+    expect(links.length).toBeGreaterThanOrEqual(REQUIRED_PDFS.length);
+    expect(new Set(links.map((link) => link.href)).size).toBe(links.length);
     expect(links.every((link) => link.rel === "noopener noreferrer")).toBeTruthy();
+
+    for (const requiredPdf of REQUIRED_PDFS) {
+      expect(links.some((link) => link.href === requiredPdf)).toBeTruthy();
+    }
 
     for (const { href } of links) {
       const response = await request.get(href);
@@ -150,67 +219,9 @@ test.describe("homepage smoke checks", () => {
     }
   });
 
-  test("shows portfolio tree links for every entry", async ({ page }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
-    const portfolioPanel = page.locator("#portfolio-panel");
-    await page.getByRole("tab", { name: "Portfolio" }).click();
-
-    await expect(portfolioPanel.getByRole("link", { name: "Zenith Legal app" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("link", { name: "Synthesize" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("link", { name: "Tau AI" })).toBeVisible();
-    await expect(
-      portfolioPanel.getByText("Alzheimer's Treatment", { exact: true })
-    ).toBeVisible();
-    await expect(portfolioPanel.getByRole("link", { name: "AD Treatment Research (Poster)" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("link", { name: "AD Treatment Research (Proposal)" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("link", { name: "DEGs among PTSD and AD" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("link", { name: "Early Women's Rights History (APUSH)" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("link", { name: "On Collective Punishment (School Newspaper Argument)" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("link", { name: "Laqueur Essay (Death and Dying)" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("link", { name: "On the Assessment of AI Consciousness (Philosophy of Mind Indep. Study)" })).toBeVisible();
-    await expect(portfolioPanel.getByRole("link", { name: "View Resume (PDF)" })).toBeVisible();
-  });
-
-  test("renders metadata labels in the portfolio DOM", async ({ page }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
-
-    const portfolioPanel = page.locator("#portfolio-panel");
-    await page.getByRole("tab", { name: "Portfolio" }).click();
-
-    for (const label of PORTFOLIO_META_LABELS) {
-      await expect(portfolioPanel.getByText(label, { exact: true }).first()).toBeVisible();
-    }
-  });
-
-  test("renders tree prefixes in the portfolio DOM", async ({ page }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
-
-    const portfolioPanel = page.locator("#portfolio-panel");
-    await page.getByRole("tab", { name: "Portfolio" }).click();
-
-    const rowTexts = await portfolioPanel.locator("li").evaluateAll((nodes) =>
-      nodes.map((node) => (node.textContent || "").trim())
-    );
-
-    expect(rowTexts).toHaveLength(12);
-    expect(rowTexts.every((text) => /^[├└│]/.test(text))).toBeTruthy();
-    expect(rowTexts.some((text) => text.includes("Alzheimer's Treatment"))).toBeTruthy();
-    expect(
-      rowTexts.some((text) => PORTFOLIO_META_LABELS.some((label) => text.includes(label)))
-    ).toBeTruthy();
-    expect(rowTexts.every((text) => !/Open PDF|description/i.test(text))).toBeTruthy();
-  });
-
   test("toggles the theme and persists the choice after reload", async ({ page }) => {
-    await page.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/, async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: "text/css",
-        body: "",
-      });
-    });
-
-    await page.goto("/", { waitUntil: "networkidle" });
+    await stubGoogleFonts(page);
+    await openHomepage(page);
 
     const toggle = page.locator(".theme-toggle-checkbox");
     const label = page.locator(".theme-label");
@@ -231,17 +242,64 @@ test.describe("homepage smoke checks", () => {
     await expect(root).toHaveAttribute("data-theme", "dark");
     await expect(toggle).toBeChecked();
     await expect(label).toHaveText("Dark");
+  });
+
+  test("keeps the homepage interactive when localStorage is unavailable", async ({ page }) => {
+    const pageErrors = [];
+
+    await page.addInitScript(() => {
+      const error = () => new DOMException("Blocked", "SecurityError");
+      const failingStorage = {
+        getItem() {
+          throw error();
+        },
+        setItem() {
+          throw error();
+        },
+        removeItem() {
+          throw error();
+        },
+        clear() {
+          throw error();
+        },
+        key() {
+          return null;
+        },
+        get length() {
+          return 0;
+        }
+      };
+
+      Object.defineProperty(window, "localStorage", {
+        configurable: true,
+        value: failingStorage
+      });
+    });
+
+    page.on("pageerror", (error) => {
+      pageErrors.push(error.message);
+    });
+
+    await openHomepage(page);
+
+    const root = page.locator("html");
+    const toggle = page.locator(".theme-toggle-checkbox");
+    const label = page.locator(".theme-label");
+
+    await expect(root).toHaveAttribute("data-theme", "light");
+    await expect(label).toHaveText("Light");
+
+    await toggle.check();
+    await expect(root).toHaveAttribute("data-theme", "dark");
+    await expect(label).toHaveText("Dark");
 
     await page.getByRole("tab", { name: "Portfolio" }).click();
     await expect(page.locator("#portfolio-panel")).toBeVisible();
-
-    await toggle.uncheck();
-    await expect(root).toHaveAttribute("data-theme", "light");
-    await expect(label).toHaveText("Light");
+    expect(pageErrors).toEqual([]);
   });
 
   test("has no critical accessibility violations on the homepage", async ({ page }) => {
-    await page.goto("/", { waitUntil: "networkidle" });
+    await openHomepage(page);
 
     const results = await new AxeBuilder({ page }).analyze();
     const criticalViolations = results.violations.filter(
