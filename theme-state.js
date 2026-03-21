@@ -1,5 +1,5 @@
 const THEME_STORAGE_KEY = "theme";
-const DEFAULT_THEME = "light";
+const DEFAULT_THEME = "dark";
 
 function normalizeTheme(value) {
   return value === "dark" ? "dark" : DEFAULT_THEME;

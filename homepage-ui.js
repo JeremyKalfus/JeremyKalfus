@@ -27,12 +27,6 @@ function getThemeState(windowObject = window) {
   return themeState;
 }
 
-function restartPortfolioEntrance(panel) {
-  panel.classList.remove("is-entering");
-  void panel.offsetWidth;
-  panel.classList.add("is-entering");
-}
-
 function setActiveView(viewName, viewTabs, panelMap) {
   viewTabs.forEach((tab) => {
     const isActive = readViewName(tab.dataset.viewTarget) === viewName;
@@ -44,15 +38,6 @@ function setActiveView(viewName, viewTabs, panelMap) {
     const isActive = panelName === viewName;
     panel.hidden = !isActive;
     panel.classList.toggle("is-active", isActive);
-
-    if (!isActive) {
-      panel.classList.remove("is-entering");
-      return;
-    }
-
-    if (panelName === "portfolio") {
-      restartPortfolioEntrance(panel);
-    }
   });
 }
 
@@ -167,7 +152,6 @@ if (typeof module !== "undefined" && module.exports) {
     initThemeControls,
     initViewTabs,
     readViewName,
-    restartPortfolioEntrance,
     setActiveView,
   };
 }

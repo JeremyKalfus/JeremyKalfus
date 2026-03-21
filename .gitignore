@@ -1,10 +1,15 @@
 .DS_Store
 **/.DS_Store
 node_modules/
+
+# Playwright
+playwright.config.js
 playwright-report/
 test-results/
 blob-report/
 .playwright/
-.desloppify/
-.agents/
 tests/
+
+# Local agent tooling
+.agents/
+.desloppify/

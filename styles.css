@@ -16,7 +16,7 @@
     --color-border: #d8d3c9;
     --color-border-strong: #b8afa0;
     --color-switcher-border: #d8d3c9;
-    --color-switcher-selected: #d8d3c9;
+    --color-switcher-selected: #ffffff;
     --color-switcher-selected-text: #111111;
     --color-focus: #1d4ed8;
     --color-toggle: #525252;
@@ -59,7 +59,7 @@
     --color-border: #3b3832;
     --color-border-strong: #5a554d;
     --color-switcher-border: #5a554d;
-    --color-switcher-selected: #d8d3c9;
+    --color-switcher-selected: #ffffff;
     --color-switcher-selected-text: #111111;
     --color-focus: #93c5fd;
     --color-toggle: #d9d4cc;
@@ -79,7 +79,6 @@ body {
     background-color: var(--color-bg);
     background-image: radial-gradient(circle at top, rgba(186, 176, 152, 0.12), transparent 28rem);
     background-repeat: no-repeat;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 :root.dark-mode body {
@@ -164,7 +163,6 @@ a {
     width: 56px;
     height: 32px;
     background-color: #d7d2ca;
-    transition: 0.25s ease;
     border-radius: var(--radius-pill);
     display: block;
     z-index: 1;
@@ -179,7 +177,6 @@ a {
     left: 4px;
     bottom: 4px;
     background-color: #ffffff;
-    transition: 0.25s ease;
     border-radius: 50%;
     display: block;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
@@ -247,7 +244,6 @@ a {
     line-height: 1.2;
     color: var(--color-text-secondary);
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .view-tab[aria-selected="true"] {
@@ -295,29 +291,10 @@ a {
 .portfolio-panel {
     display: grid;
     gap: 0;
-    transform-origin: top center;
-    transition: opacity 0.28s ease, transform 0.28s ease;
 }
 
 .portfolio-panel[hidden] {
     display: none;
-}
-
-.portfolio-panel.is-entering,
-.portfolio-panel.is-active {
-    animation: portfolio-drop 0.28s ease both;
-}
-
-@keyframes portfolio-drop {
-    from {
-        opacity: 0;
-        transform: translateY(-0.75rem);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .projects,
@@ -395,7 +372,6 @@ a {
     text-decoration-thickness: 1px;
     text-underline-offset: 0.16em;
     overflow-wrap: anywhere;
-    transition: color 0.2s ease;
 }
 
 .tree-link:visited {
@@ -501,10 +477,9 @@ a {
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .view-tab,
-    .portfolio-panel {
-        transition: none;
-        animation: none;
-    }
+*,
+*::before,
+*::after {
+    animation: none !important;
+    transition: none !important;
 }
