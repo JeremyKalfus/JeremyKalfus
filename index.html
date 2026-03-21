@@ -7,17 +7,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Rethink+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+    <script src="theme-state.js"></script>
     <script>
-        (function() {
-            const storedTheme = localStorage.getItem('theme');
-            const theme = storedTheme || 'light';
+        if (!window.homepageTheme) {
+            throw new Error('theme-state.js failed to load before the homepage theme bootstrap.');
+        }
 
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark-mode');
-            }
-            document.documentElement.dataset.theme = theme;
-        })();
+        window.homepageTheme.applyStoredTheme(document.documentElement);
     </script>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -63,7 +59,7 @@
         >
             <h2>About me</h2>
             <p>I have always loved learning about all kinds of science and building things. My interests are much too diverse to qualify, but my main obsessions are more often in brain-related things (neuroscience, cognition, neurodegenerative disease, brain preservation) and ML.</p>
-            <p>This website is a work-in-progress and is often changing. It is currently designed in an attempt to balance maximum readability (note large font, spaced lines, Noto Sans) with somewhat aestheitically pleasing UI. Neither this page nor my resume reflects all of the things I know/have done/am working on. If you are interesting in talking, email me at jeremykalfus [at] gmail [dot] com.</p>
+            <p>This website is an ever-changing work-in-progress. It is currently designed in an attempt to balance maximum readability (note large font, spaced lines, Noto Sans) with somewhat aestheitically pleasing UI. Neither this page nor my resume reflects all of the things I know/have done/am working on. If you are interesting in talking, email me at jeremykalfus [at] gmail [dot] com.</p>
         </section>
 
         <div
@@ -76,7 +72,7 @@
         >
             <section class="projects" aria-labelledby="projects-heading">
                 <h2 id="projects-heading">Projects</h2>
-                <ul class="tree-list" aria-label="Projects">
+                <ul class="tree-list tree-list--connected" aria-label="Projects">
                     <li class="tree-item">
                         <span class="tree-prefix" aria-hidden="true">├──</span>
                         <a href="https://apps.apple.com/us/app/zenith-legal/id6759677619" class="tree-link" target="_blank" rel="noopener noreferrer">Zenith Legal app</a>
@@ -97,12 +93,12 @@
 
             <section class="research" aria-labelledby="research-heading">
                 <h2 id="research-heading">Research</h2>
-                <ul class="tree-list" aria-label="Research">
+                <ul class="tree-list tree-list--connected" aria-label="Research">
                     <li class="tree-item tree-item--branch">
                         <span class="tree-prefix" aria-hidden="true">├──</span>
                         <span class="tree-label">Alzheimer&apos;s Treatment</span>
                         <span class="tree-meta">2 items</span>
-                        <ul class="tree-list tree-list--nested" aria-label="Alzheimer's Treatment">
+                        <ul class="tree-list tree-list--connected tree-list--nested" aria-label="Alzheimer's Treatment">
                             <li class="tree-item">
                                 <span class="tree-prefix" aria-hidden="true">├──</span>
                                 <a href="projects/NIM811.pdf" class="tree-link" target="_blank" rel="noopener noreferrer">AD Treatment Research (Poster)</a>
@@ -125,7 +121,7 @@
 
             <section class="writings" aria-labelledby="writings-heading">
                 <h2 id="writings-heading">Writings</h2>
-                <ul class="tree-list" aria-label="Writings">
+                <ul class="tree-list tree-list--connected" aria-label="Writings">
                     <li class="tree-item">
                         <span class="tree-prefix" aria-hidden="true">├──</span>
                         <a href="writings/APUSHWR.pdf" class="tree-link" target="_blank" rel="noopener noreferrer">Early Women's Rights History (APUSH)</a>
@@ -175,6 +171,6 @@
 
     </main>
 
-    <script src="script.js"></script>
+    <script src="homepage-ui.js"></script>
 </body>
 </html>
