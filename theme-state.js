@@ -2,7 +2,7 @@ const THEME_STORAGE_KEY = "theme";
 const DEFAULT_THEME = "dark";
 
 function normalizeTheme(value) {
-  return value === "dark" ? "dark" : DEFAULT_THEME;
+  return value === "dark" || value === "light" ? value : DEFAULT_THEME;
 }
 
 function isRecoverableStorageError(error) {

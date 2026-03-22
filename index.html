@@ -8,11 +8,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Rethink+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="theme-state.js"></script>
+    <script src="motion-state.js"></script>
     <script>
         if (!window.homepageTheme) {
             throw new Error('theme-state.js failed to load before the homepage theme bootstrap.');
         }
 
+        if (!window.homepageMotion) {
+            throw new Error('motion-state.js failed to load before the homepage motion bootstrap.');
+        }
+
+        window.homepageMotion.applyStoredMotion(document.documentElement);
         window.homepageTheme.applyStoredTheme(document.documentElement);
     </script>
     <link rel="stylesheet" href="styles.css">
@@ -166,6 +172,17 @@
                     <span class="slider"></span>
                 </label>
                 <p class="theme-label" aria-live="polite">Light</p>
+            </div>
+        </div>
+
+        <div class="theme-toggle-container readable-prose">
+            <p class="theme-heading">Animations</p>
+            <div class="theme-toggle-control">
+                <label class="theme-toggle">
+                    <input type="checkbox" class="animations-toggle-checkbox" aria-label="Toggle animations">
+                    <span class="slider"></span>
+                </label>
+                <p class="animations-label" aria-live="polite">Off</p>
             </div>
         </div>
 

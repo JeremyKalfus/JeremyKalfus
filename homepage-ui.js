@@ -4,7 +4,7 @@ function isHTMLElement(node) {
   return node instanceof HTMLElement;
 }
 
-function isThemeToggle(node) {
+function isToggleCheckbox(node) {
   return node instanceof HTMLInputElement && node.type === "checkbox";
 }
 
@@ -27,17 +27,63 @@ function getThemeState(windowObject = window) {
   return themeState;
 }
 
-function setActiveView(viewName, viewTabs, panelMap) {
+function getMotionState(windowObject = window) {
+  const motionState = windowObject.homepageMotion;
+
+  if (
+    !motionState ||
+    typeof motionState.applyMotion !== "function" ||
+    typeof motionState.persistMotion !== "function" ||
+    typeof motionState.resolveInitialMotion !== "function"
+  ) {
+    throw new Error("motion-state.js must load before homepage-ui.js.");
+  }
+
+  return motionState;
+}
+
+function restartPanelEntrance(panel) {
+  panel.classList.remove("is-entering");
+  void panel.offsetWidth;
+  panel.classList.add("is-entering");
+}
+
+function refreshActivePanelMotion(documentObject = document) {
+  const activePanel = documentObject.querySelector("[data-view-panel].is-active");
+
+  if (isHTMLElement(activePanel) && !activePanel.hidden) {
+    restartPanelEntrance(activePanel);
+  }
+}
+
+function clearPanelMotion(documentObject = document) {
+  documentObject.querySelectorAll("[data-view-panel].is-entering").forEach((panel) => {
+    if (isHTMLElement(panel)) {
+      panel.classList.remove("is-entering");
+    }
+  });
+}
+
+function setActiveView(viewName, viewTabs, panelMap, root = document.documentElement) {
   viewTabs.forEach((tab) => {
     const isActive = readViewName(tab.dataset.viewTarget) === viewName;
     tab.setAttribute("aria-selected", String(isActive));
     tab.tabIndex = isActive ? 0 : -1;
   });
 
+  const animationsEnabled = root.classList.contains("animations-enabled");
+
   panelMap.forEach((panel, panelName) => {
     const isActive = panelName === viewName;
     panel.hidden = !isActive;
     panel.classList.toggle("is-active", isActive);
+
+    if (!animationsEnabled || !isActive) {
+      panel.classList.remove("is-entering");
+      return;
+    }
+
+    restartPanelEntrance(panel);
   });
 }
 
@@ -45,7 +91,7 @@ function initThemeControls(themeState, documentObject = document) {
   const toggle = documentObject.querySelector(".theme-toggle-checkbox");
   const label = documentObject.querySelector(".theme-label");
 
-  if (!isThemeToggle(toggle) || !isHTMLElement(label)) {
+  if (!isToggleCheckbox(toggle) || !isHTMLElement(label)) {
     return;
   }
 
@@ -67,6 +113,41 @@ function initThemeControls(themeState, documentObject = document) {
   });
 }
 
+function initMotionControls(motionState, documentObject = document) {
+  const toggle = documentObject.querySelector(".animations-toggle-checkbox");
+  const label = documentObject.querySelector(".animations-label");
+
+  if (!isToggleCheckbox(toggle) || !isHTMLElement(label)) {
+    return;
+  }
+
+  const syncMotionControls = (motion, persist) => {
+    const appliedMotion = motion === "on" ? "on" : "off";
+
+    if (appliedMotion === "on") {
+      motionState.applyMotion(appliedMotion, documentObject.documentElement);
+      toggle.checked = true;
+      label.textContent = "On";
+      refreshActivePanelMotion(documentObject);
+    } else {
+      toggle.checked = false;
+      label.textContent = "Off";
+      motionState.applyMotion(appliedMotion, documentObject.documentElement);
+      clearPanelMotion(documentObject);
+    }
+
+    if (persist) {
+      motionState.persistMotion(appliedMotion);
+    }
+  };
+
+  syncMotionControls(motionState.resolveInitialMotion(documentObject.documentElement), false);
+
+  toggle.addEventListener("change", () => {
+    syncMotionControls(toggle.checked ? "on" : "off", true);
+  });
+}
+
 function initViewTabs(documentObject = document) {
   const viewTabs = Array.from(documentObject.querySelectorAll(".view-tab")).filter(
     (tab) => tab instanceof HTMLButtonElement && readViewName(tab.dataset.viewTarget)
@@ -84,14 +165,14 @@ function initViewTabs(documentObject = document) {
   const initialTab = viewTabs.find((tab) => tab.getAttribute("aria-selected") === "true") || viewTabs[0];
   const initialView = readViewName(initialTab.dataset.viewTarget) || "about";
 
-  setActiveView(initialView, viewTabs, panelMap);
+  setActiveView(initialView, viewTabs, panelMap, documentObject.documentElement);
 
   viewTabs.forEach((tab, index) => {
     tab.addEventListener("click", () => {
       const targetView = readViewName(tab.dataset.viewTarget);
 
       if (targetView) {
-        setActiveView(targetView, viewTabs, panelMap);
+        setActiveView(targetView, viewTabs, panelMap, documentObject.documentElement);
       }
     });
 
@@ -120,7 +201,7 @@ function initViewTabs(documentObject = document) {
         return;
       }
 
-      setActiveView(nextView, viewTabs, panelMap);
+      setActiveView(nextView, viewTabs, panelMap, documentObject.documentElement);
       nextTab.focus();
     });
   });
@@ -128,8 +209,10 @@ function initViewTabs(documentObject = document) {
 
 function initHomepageUi(documentObject = document, windowObject = window) {
   const themeState = getThemeState(windowObject);
+  const motionState = getMotionState(windowObject);
 
   initThemeControls(themeState, documentObject);
+  initMotionControls(motionState, documentObject);
   initViewTabs(documentObject);
   windowObject.homepageUiReady = true;
 }
@@ -147,11 +230,16 @@ if (typeof document !== "undefined") {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     VIEW_NAMES,
+    getMotionState,
     getThemeState,
+    clearPanelMotion,
+    refreshActivePanelMotion,
     initHomepageUi,
+    initMotionControls,
     initThemeControls,
     initViewTabs,
     readViewName,
+    restartPanelEntrance,
     setActiveView,
   };
 }
