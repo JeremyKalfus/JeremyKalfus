@@ -219,7 +219,7 @@ a {
 .intro {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.45rem;
     text-align: center;
     margin-bottom: 2.35rem;
     padding-bottom: 1.5rem;
@@ -228,7 +228,11 @@ a {
 
 .intro-copy {
     margin: 0 auto;
+    display: grid;
+    justify-items: stretch;
     text-align: center;
+    width: fit-content;
+    max-width: 100%;
 }
 
 .intro-copy h1 {
@@ -244,11 +248,12 @@ a {
 .contact-links {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1.7rem;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    width: 100%;
+    gap: 0;
     list-style: none;
-    margin-top: 0.8rem;
+    margin-top: 0.18rem;
     padding: 0;
 }
 
@@ -262,8 +267,8 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.45rem;
-    height: 2.45rem;
+    width: 1.7rem;
+    height: 1.7rem;
     line-height: 0;
     color: var(--color-heading);
     text-decoration: none;
@@ -271,8 +276,8 @@ a {
 
 iconify-icon {
     display: block;
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 :root.animations-enabled .contact-link {
@@ -310,6 +315,7 @@ iconify-icon {
     align-items: center;
     gap: var(--space-2xs);
     align-self: center;
+    margin-top: 0.625rem;
     padding: 0.35rem;
     border: 1px solid var(--color-switcher-border);
     border-radius: var(--radius-pill);
@@ -510,23 +516,26 @@ iconify-icon {
         padding-bottom: 1rem;
     }
 
+    .intro-copy {
+        width: min(100%, 17.5rem);
+    }
+
     .intro-copy h1 {
         margin-bottom: 0.4rem;
     }
 
     .contact-links {
-        gap: 1.15rem;
-        margin-top: 0.55rem;
+        margin-top: 0.15rem;
     }
 
     .contact-link {
-        width: 2.1rem;
-        height: 2.1rem;
+        width: 1.6rem;
+        height: 1.6rem;
     }
 
     iconify-icon {
-        width: 1.9rem;
-        height: 1.9rem;
+        width: 1.35rem;
+        height: 1.35rem;
     }
 
     .view-switcher {
