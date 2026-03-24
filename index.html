@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Rethink+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="theme-state.js"></script>
     <script src="motion-state.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
     <script>
         if (!window.homepageTheme) {
             throw new Error('theme-state.js failed to load before the homepage theme bootstrap.');
@@ -28,6 +29,56 @@
         <header class="intro" aria-labelledby="site-title">
             <div class="intro-copy readable-prose">
                 <h1 id="site-title">Jeremy Kalfus</h1>
+                <ul class="contact-links" aria-label="Contact links">
+                    <li>
+                        <a
+                            class="contact-link"
+                            href="https://github.com/JeremyKalfus"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="GitHub"
+                            data-contact="github"
+                        >
+                            <span class="sr-only">GitHub</span>
+                            <iconify-icon icon="lucide:github" aria-hidden="true"></iconify-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            class="contact-link"
+                            href="https://www.linkedin.com/in/jeremy-kalfus"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="LinkedIn"
+                            data-contact="linkedin"
+                        >
+                            <span class="sr-only">LinkedIn</span>
+                            <iconify-icon icon="lucide:linkedin" aria-hidden="true"></iconify-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            class="contact-link"
+                            href="mailto:jeremykalfus@gmail.com"
+                            aria-label="Email Jeremy Kalfus"
+                            data-contact="email"
+                        >
+                            <span class="sr-only">Email Jeremy Kalfus</span>
+                            <iconify-icon icon="lucide:mail" aria-hidden="true"></iconify-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            class="contact-link"
+                            href="tel:+12028347778"
+                            aria-label="Call 202-834-7778"
+                            data-contact="phone"
+                        >
+                            <span class="sr-only">Call 202-834-7778</span>
+                            <iconify-icon icon="lucide:phone" aria-hidden="true"></iconify-icon>
+                        </a>
+                    </li>
+                </ul>
             </div>
             <div class="view-switcher readable-prose" role="tablist" aria-label="Homepage sections">
                 <button

@@ -20,7 +20,6 @@
     --color-switcher-selected-text: #111111;
     --color-focus: #1d4ed8;
     --color-toggle: #525252;
-
     --shadow-card: 0 12px 30px rgba(17, 17, 17, 0.05);
     --shadow-card-hover: 0 16px 36px rgba(17, 17, 17, 0.08);
 
@@ -63,7 +62,6 @@
     --color-switcher-selected-text: #111111;
     --color-focus: #93c5fd;
     --color-toggle: #d9d4cc;
-
     --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.28);
     --shadow-card-hover: 0 16px 36px rgba(0, 0, 0, 0.36);
 
@@ -221,10 +219,10 @@ a {
 .intro {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: 0.7rem;
     text-align: center;
-    margin-bottom: 2.75rem;
-    padding-bottom: var(--space-lg);
+    margin-bottom: 2.35rem;
+    padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--color-border);
 }
 
@@ -241,6 +239,70 @@ a {
     letter-spacing: -0.03em;
     color: var(--color-heading);
     margin-bottom: 0;
+}
+
+.contact-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.7rem;
+    list-style: none;
+    margin-top: 0.8rem;
+    padding: 0;
+}
+
+.contact-links li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.45rem;
+    height: 2.45rem;
+    line-height: 0;
+    color: var(--color-heading);
+    text-decoration: none;
+}
+
+iconify-icon {
+    display: block;
+    width: 2.2rem;
+    height: 2.2rem;
+}
+
+:root.animations-enabled .contact-link {
+    transition: transform 0.2s ease, opacity 0.2s ease, color 0.2s ease;
+}
+
+:root.animations-enabled .contact-link:hover {
+    transform: translateY(-2px);
+    opacity: 0.72;
+}
+
+.contact-link:hover {
+    opacity: 0.72;
+}
+
+.contact-link:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 4px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .view-switcher {
@@ -444,12 +506,27 @@ a {
     }
 
     .intro {
-        margin-bottom: var(--space-lg);
-        padding-bottom: var(--space-md);
+        margin-bottom: 1.4rem;
+        padding-bottom: 1rem;
     }
 
     .intro-copy h1 {
-        margin-bottom: var(--space-xs);
+        margin-bottom: 0.4rem;
+    }
+
+    .contact-links {
+        gap: 1.15rem;
+        margin-top: 0.55rem;
+    }
+
+    .contact-link {
+        width: 2.1rem;
+        height: 2.1rem;
+    }
+
+    iconify-icon {
+        width: 1.9rem;
+        height: 1.9rem;
     }
 
     .view-switcher {
