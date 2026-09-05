@@ -148,6 +148,7 @@ a {
 }
 
 .preference-item {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--space-md);
@@ -169,7 +170,7 @@ a {
 .preference-heading-group {
     display: flex;
     align-items: center;
-    gap: var(--space-2xs);
+    gap: 0.3rem;
 }
 
 /* The label for this control is always set in the typeface and spacing the
@@ -190,50 +191,80 @@ a {
 }
 
 .info-button {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.1rem;
+    height: 1.1rem;
     padding: 0;
     border: 0;
-    border-radius: var(--radius-pill);
+    line-height: 0;
     background: none;
     color: var(--color-text-secondary);
     cursor: pointer;
 }
 
 .info-button iconify-icon {
-    width: 1.15rem;
-    height: 1.15rem;
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+/* Keeps a comfortable hit target without making the glyph itself larger. */
+.info-button::after {
+    content: "";
+    position: absolute;
+    inset: -0.55rem;
 }
 
 .info-button:hover,
-.info-button[aria-expanded="true"] {
+.info-button.is-open {
     color: var(--color-heading);
 }
 
 .info-button:focus-visible {
     outline: 3px solid var(--color-focus);
-    outline-offset: 2px;
+    outline-offset: 3px;
+    border-radius: 2px;
 }
 
 :root.animations-enabled .info-button {
     transition: color 0.2s ease;
 }
 
-.preference-note {
-    flex-basis: 100%;
-    margin: 0;
+/* Floats above the row so opening it never reflows the preferences panel. */
+.info-tip {
+    position: absolute;
+    bottom: calc(100% + 0.6rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    width: max-content;
+    max-width: min(22rem, calc(100vw - 3rem));
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
     color: var(--color-text-secondary);
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-body);
-    max-width: var(--measure-prose);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: left;
     text-wrap: pretty;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
-.preference-note[hidden] {
-    display: none;
+.info-button:hover ~ .info-tip,
+.info-button:focus-visible ~ .info-tip,
+.info-tip.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+:root.animations-enabled .info-tip {
+    transition: opacity 0.18s ease, visibility 0.18s ease;
 }
 
 .theme-label,

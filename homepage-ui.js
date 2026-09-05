@@ -220,22 +220,46 @@ function initContactLinks(documentObject = document) {
 }
 
 function initInfoButtons(documentObject = document) {
-  documentObject.querySelectorAll(".info-button[aria-controls]").forEach((button) => {
-    if (!(button instanceof HTMLButtonElement)) {
+  const pairs = [];
+
+  documentObject.querySelectorAll(".info-button[aria-describedby]").forEach((button) => {
+    const tip = documentObject.getElementById(button.getAttribute("aria-describedby"));
+
+    if (!(button instanceof HTMLButtonElement) || !isHTMLElement(tip)) {
       return;
     }
 
-    const note = documentObject.getElementById(button.getAttribute("aria-controls"));
+    pairs.push({ button, tip });
+  });
 
-    if (!isHTMLElement(note)) {
-      return;
-    }
+  if (!pairs.length) {
+    return;
+  }
 
-    button.addEventListener("click", () => {
-      const expanded = button.getAttribute("aria-expanded") === "true";
-      button.setAttribute("aria-expanded", String(!expanded));
-      note.hidden = expanded;
+  /* Hover and focus are handled in CSS. This only covers touch, where there is
+     no hover, and gives the tip a way out once it is pinned open. */
+  const closeAll = () => {
+    pairs.forEach(({ button, tip }) => {
+      button.classList.remove("is-open");
+      tip.classList.remove("is-open");
     });
+  };
+
+  pairs.forEach(({ button, tip }) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const open = tip.classList.contains("is-open");
+      closeAll();
+      button.classList.toggle("is-open", !open);
+      tip.classList.toggle("is-open", !open);
+    });
+  });
+
+  documentObject.addEventListener("click", closeAll);
+  documentObject.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeAll();
+    }
   });
 }
 

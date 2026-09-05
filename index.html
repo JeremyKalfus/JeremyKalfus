@@ -284,12 +284,16 @@
                     <button
                         type="button"
                         class="info-button"
-                        aria-expanded="false"
-                        aria-controls="dyslexia-note"
+                        aria-describedby="dyslexia-note"
                         aria-label="About dyslexia-friendly text"
                     >
                         <iconify-icon icon="lucide:info" aria-hidden="true"></iconify-icon>
                     </button>
+                    <span class="info-tip dyslexia-note" id="dyslexia-note" role="tooltip">
+                        Studies are mixed on whether this helps. Wider letter and word spacing has
+                        decent evidence behind it; the font change on its own mostly does not. It is
+                        here as a preference, not a treatment.
+                    </span>
                 </div>
                 <div class="theme-toggle-control">
                     <label class="theme-toggle">
@@ -299,11 +303,6 @@
                     <p class="dyslexia-label" aria-live="polite">Off</p>
                 </div>
             </div>
-            <p class="preference-note dyslexia-note" id="dyslexia-note" hidden>
-                Studies are mixed on whether this helps. Wider letter and word spacing has decent
-                evidence behind it; the font change on its own mostly does not. It is here as a
-                preference, not a treatment.
-            </p>
         </div>
 
     </main>
