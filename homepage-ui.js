@@ -42,6 +42,21 @@ function getMotionState(windowObject = window) {
   return motionState;
 }
 
+function getDyslexiaState(windowObject = window) {
+  const dyslexiaState = windowObject.homepageDyslexia;
+
+  if (
+    !dyslexiaState ||
+    typeof dyslexiaState.applyDyslexia !== "function" ||
+    typeof dyslexiaState.persistDyslexia !== "function" ||
+    typeof dyslexiaState.resolveInitialDyslexia !== "function"
+  ) {
+    throw new Error("dyslexia-state.js must load before homepage-ui.js.");
+  }
+
+  return dyslexiaState;
+}
+
 function restartPanelEntrance(panel) {
   panel.classList.remove("is-entering");
   void panel.offsetWidth;
@@ -148,6 +163,33 @@ function initMotionControls(motionState, documentObject = document) {
   });
 }
 
+function initDyslexiaControls(dyslexiaState, documentObject = document) {
+  const toggle = documentObject.querySelector(".dyslexia-toggle-checkbox");
+  const label = documentObject.querySelector(".dyslexia-label");
+
+  if (!isToggleCheckbox(toggle) || !isHTMLElement(label)) {
+    return;
+  }
+
+  const syncDyslexiaControls = (dyslexia, persist) => {
+    const appliedDyslexia = dyslexia === "on" ? "on" : "off";
+
+    dyslexiaState.applyDyslexia(appliedDyslexia, documentObject.documentElement);
+    toggle.checked = appliedDyslexia === "on";
+    label.textContent = appliedDyslexia === "on" ? "On" : "Off";
+
+    if (persist) {
+      dyslexiaState.persistDyslexia(appliedDyslexia);
+    }
+  };
+
+  syncDyslexiaControls(dyslexiaState.resolveInitialDyslexia(documentObject.documentElement), false);
+
+  toggle.addEventListener("change", () => {
+    syncDyslexiaControls(toggle.checked ? "on" : "off", true);
+  });
+}
+
 function initViewTabs(documentObject = document) {
   const viewTabs = Array.from(documentObject.querySelectorAll(".view-tab")).filter(
     (tab) => tab instanceof HTMLButtonElement && readViewName(tab.dataset.viewTarget)
@@ -210,9 +252,11 @@ function initViewTabs(documentObject = document) {
 function initHomepageUi(documentObject = document, windowObject = window) {
   const themeState = getThemeState(windowObject);
   const motionState = getMotionState(windowObject);
+  const dyslexiaState = getDyslexiaState(windowObject);
 
   initThemeControls(themeState, documentObject);
   initMotionControls(motionState, documentObject);
+  initDyslexiaControls(dyslexiaState, documentObject);
   initViewTabs(documentObject);
   windowObject.homepageUiReady = true;
 }
@@ -230,10 +274,12 @@ if (typeof document !== "undefined") {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     VIEW_NAMES,
+    getDyslexiaState,
     getMotionState,
     getThemeState,
     clearPanelMotion,
     refreshActivePanelMotion,
+    initDyslexiaControls,
     initHomepageUi,
     initMotionControls,
     initThemeControls,

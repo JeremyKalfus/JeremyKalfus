@@ -6,9 +6,10 @@
     <title>Jeremy Kalfus</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Rethink+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Rethink+Sans:wght@400;500;600;700;800&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="theme-state.js"></script>
     <script src="motion-state.js"></script>
+    <script src="dyslexia-state.js"></script>
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
     <script>
         if (!window.homepageTheme) {
@@ -19,8 +20,13 @@
             throw new Error('motion-state.js failed to load before the homepage motion bootstrap.');
         }
 
+        if (!window.homepageDyslexia) {
+            throw new Error('dyslexia-state.js failed to load before the homepage dyslexia bootstrap.');
+        }
+
         window.homepageMotion.applyStoredMotion(document.documentElement);
         window.homepageTheme.applyStoredTheme(document.documentElement);
+        window.homepageDyslexia.applyStoredDyslexia(document.documentElement);
     </script>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -236,6 +242,16 @@
                         <span class="slider"></span>
                     </label>
                     <p class="animations-label" aria-live="polite">Off</p>
+                </div>
+            </div>
+            <div class="preference-item">
+                <p class="theme-heading">Dyslexia-friendly</p>
+                <div class="theme-toggle-control">
+                    <label class="theme-toggle">
+                        <input type="checkbox" class="dyslexia-toggle-checkbox" aria-label="Toggle dyslexia-friendly text">
+                        <span class="slider"></span>
+                    </label>
+                    <p class="dyslexia-label" aria-live="polite">Off</p>
                 </div>
             </div>
         </div>
