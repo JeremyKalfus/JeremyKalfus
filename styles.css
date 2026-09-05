@@ -410,6 +410,16 @@ iconify-icon {
     margin-top: 0;
 }
 
+.portfolio-notice {
+    margin: 0 0 var(--space-md);
+    padding-left: var(--space-sm);
+    border-left: 3px solid var(--color-border-strong);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-body);
+    text-wrap: pretty;
+}
+
 .projects h2,
 .research h2,
 .writings h2,
