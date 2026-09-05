@@ -219,6 +219,26 @@ function initContactLinks(documentObject = document) {
   });
 }
 
+function initInfoButtons(documentObject = document) {
+  documentObject.querySelectorAll(".info-button[aria-controls]").forEach((button) => {
+    if (!(button instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    const note = documentObject.getElementById(button.getAttribute("aria-controls"));
+
+    if (!isHTMLElement(note)) {
+      return;
+    }
+
+    button.addEventListener("click", () => {
+      const expanded = button.getAttribute("aria-expanded") === "true";
+      button.setAttribute("aria-expanded", String(!expanded));
+      note.hidden = expanded;
+    });
+  });
+}
+
 function initViewTabs(documentObject = document) {
   const viewTabs = Array.from(documentObject.querySelectorAll(".view-tab")).filter(
     (tab) => tab instanceof HTMLButtonElement && readViewName(tab.dataset.viewTarget)
@@ -287,6 +307,7 @@ function initHomepageUi(documentObject = document, windowObject = window) {
   initMotionControls(motionState, documentObject);
   initDyslexiaControls(dyslexiaState, documentObject);
   initContactLinks(documentObject);
+  initInfoButtons(documentObject);
   initViewTabs(documentObject);
   windowObject.homepageUiReady = true;
 }
@@ -312,6 +333,7 @@ if (typeof module !== "undefined" && module.exports) {
     initContactLinks,
     initDyslexiaControls,
     initHomepageUi,
+    initInfoButtons,
     initMotionControls,
     initThemeControls,
     initViewTabs,

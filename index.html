@@ -279,7 +279,18 @@
                 </div>
             </div>
             <div class="preference-item">
-                <p class="theme-heading">Dyslexia-friendly</p>
+                <div class="preference-heading-group">
+                    <p class="theme-heading dyslexia-heading">Dyslexia-friendly</p>
+                    <button
+                        type="button"
+                        class="info-button"
+                        aria-expanded="false"
+                        aria-controls="dyslexia-note"
+                        aria-label="About dyslexia-friendly text"
+                    >
+                        <iconify-icon icon="lucide:info" aria-hidden="true"></iconify-icon>
+                    </button>
+                </div>
                 <div class="theme-toggle-control">
                     <label class="theme-toggle">
                         <input type="checkbox" class="dyslexia-toggle-checkbox" aria-label="Toggle dyslexia-friendly text">
@@ -288,6 +299,11 @@
                     <p class="dyslexia-label" aria-live="polite">Off</p>
                 </div>
             </div>
+            <p class="preference-note dyslexia-note" id="dyslexia-note" hidden>
+                Studies are mixed on whether this helps. Wider letter and word spacing has decent
+                evidence behind it; the font change on its own mostly does not. It is here as a
+                preference, not a treatment.
+            </p>
         </div>
 
     </main>

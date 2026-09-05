@@ -166,6 +166,76 @@ a {
     gap: var(--space-sm);
 }
 
+.preference-heading-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+}
+
+/* The label for this control is always set in the typeface and spacing the
+   control turns on, so it stays legible to the people the option is for. */
+.dyslexia-heading,
+.dyslexia-note {
+    font-family: "Lexend", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: 0.05em;
+    word-spacing: 0.16em;
+}
+
+.dyslexia-label {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-body);
+    margin: 0;
+    min-width: 3.5rem;
+}
+
+.info-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+.info-button iconify-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+}
+
+.info-button:hover,
+.info-button[aria-expanded="true"] {
+    color: var(--color-heading);
+}
+
+.info-button:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+:root.animations-enabled .info-button {
+    transition: color 0.2s ease;
+}
+
+.preference-note {
+    flex-basis: 100%;
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-body);
+    max-width: var(--measure-prose);
+    text-wrap: pretty;
+}
+
+.preference-note[hidden] {
+    display: none;
+}
+
 .theme-label,
 .animations-label {
     color: var(--color-text-secondary);
