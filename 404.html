@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page not found | Jeremy Kalfus</title>
+    <meta name="description" content="That page does not exist on jeremykalfus.github.io.">
+    <meta name="robots" content="noindex">
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="theme-color" content="#111111">
+    <meta name="color-scheme" content="dark light">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Rethink+Sans:wght@400;500;600;700;800&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/theme-state.js"></script>
+    <script src="/motion-state.js"></script>
+    <script src="/dyslexia-state.js"></script>
+    <script>
+        if (window.homepageMotion) {
+            window.homepageMotion.applyStoredMotion(document.documentElement);
+        }
+
+        if (window.homepageTheme) {
+            window.homepageTheme.applyStoredTheme(document.documentElement);
+        }
+
+        if (window.homepageDyslexia) {
+            window.homepageDyslexia.applyStoredDyslexia(document.documentElement);
+        }
+    </script>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        .error-code {
+            font-family: var(--font-display);
+            font-size: var(--font-size-subtitle);
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-2xs);
+        }
+    </style>
+</head>
+<body>
+    <main class="container page-shell" id="content">
+        <header class="intro" aria-labelledby="error-title">
+            <div class="intro-copy readable-prose">
+                <p class="error-code">Error 404</p>
+                <h1 id="error-title">Page not found</h1>
+            </div>
+        </header>
+
+        <section class="content-panel about-panel readable-prose" aria-labelledby="error-title">
+            <p>There is nothing at this address. The link may be out of date, or I may have moved the page.</p>
+            <p><a class="tree-link" href="/">Go back to the homepage</a></p>
+        </section>
+    </main>
+</body>
+</html>

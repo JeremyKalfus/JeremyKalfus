@@ -190,6 +190,35 @@ function initDyslexiaControls(dyslexiaState, documentObject = document) {
   });
 }
 
+/* Contact addresses are stored base64-reversed so they are not present as
+   literal text in the HTML. This defeats regex-based address harvesters; it is
+   not a secret, and anything that executes the page can still read them. */
+function decodeContactValue(encoded) {
+  return atob(encoded).split("").reverse().join("");
+}
+
+function initContactLinks(documentObject = document) {
+  const links = documentObject.querySelectorAll(".contact-link[data-scheme][data-value]");
+
+  links.forEach((link) => {
+    if (!isHTMLElement(link)) {
+      return;
+    }
+
+    const { scheme, value } = link.dataset;
+
+    if (!scheme || !value) {
+      return;
+    }
+
+    try {
+      link.setAttribute("href", `${scheme}:${decodeContactValue(value)}`);
+    } catch (error) {
+      link.removeAttribute("href");
+    }
+  });
+}
+
 function initViewTabs(documentObject = document) {
   const viewTabs = Array.from(documentObject.querySelectorAll(".view-tab")).filter(
     (tab) => tab instanceof HTMLButtonElement && readViewName(tab.dataset.viewTarget)
@@ -257,6 +286,7 @@ function initHomepageUi(documentObject = document, windowObject = window) {
   initThemeControls(themeState, documentObject);
   initMotionControls(motionState, documentObject);
   initDyslexiaControls(dyslexiaState, documentObject);
+  initContactLinks(documentObject);
   initViewTabs(documentObject);
   windowObject.homepageUiReady = true;
 }
@@ -279,6 +309,7 @@ if (typeof module !== "undefined" && module.exports) {
     getThemeState,
     clearPanelMotion,
     refreshActivePanelMotion,
+    initContactLinks,
     initDyslexiaControls,
     initHomepageUi,
     initMotionControls,

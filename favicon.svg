@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="JK">
+  <style>
+    :root { --mark-bg: #171717; --mark-ink: #fcfbf8; }
+    @media (prefers-color-scheme: dark) {
+      :root { --mark-bg: #f4f1eb; --mark-ink: #111111; }
+    }
+  </style>
+  <rect width="64" height="64" rx="14" fill="var(--mark-bg, #171717)"/>
+  <g fill="none" stroke="var(--mark-ink, #fcfbf8)" stroke-width="6"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M27.75 20.5 V36.5 A7 7 0 0 1 13.75 36.5"/>
+    <path d="M38.25 20.5 V46.5"/>
+    <path d="M50.25 20.5 L38.75 33.5 L50.25 46.5"/>
+  </g>
+</svg>
